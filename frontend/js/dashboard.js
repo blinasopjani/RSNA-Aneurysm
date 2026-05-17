@@ -157,7 +157,7 @@ function initPageCharts(id) {
                     { label: 'CNN Baseline AUC', data: REAL_DATA.training_history.cnn, borderColor: medRose, tension: 0.3, pointRadius: 0 }
                 ]
             },
-            options: { maintainAspectRatio: false, scales: { y: { min: 0.4, max: 1.0, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } }
+            options: { maintainAspectRatio: false, scales: { y: { min: 0.4, max: 1.0, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { grid: { display: false } } } }
         });
     }
 }
@@ -176,7 +176,7 @@ function renderBar(id, labels, data, color, label = '') {
     activeCharts[id] = new Chart(document.getElementById(id), {
         type: 'bar',
         data: { labels, datasets: [{ label, data, backgroundColor: color, borderRadius: 8 }] },
-        options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } }
+        options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { grid: { display: false } } } }
     });
 }
 
@@ -185,7 +185,7 @@ function renderLine(id, labels, data, label, color) {
     activeCharts[id] = new Chart(document.getElementById(id), {
         type: 'line',
         data: { labels, datasets: [{ label, data, borderColor: color, backgroundColor: color + '20', fill: true, tension: 0.4, pointRadius: 4 }] },
-        options: { maintainAspectRatio: false, scales: { y: { min: 0, max: 1, grid: { color: '#f1f5f9' } }, x: { grid: { display: false } } } }
+        options: { maintainAspectRatio: false, scales: { y: { min: 0, max: 1, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { grid: { display: false } } } }
     });
 }
 
@@ -427,4 +427,36 @@ function resetInference() {
     document.getElementById('file-upload').value = '';
 }
 
-window.onload = () => initPageCharts('overview');
+function initTheme() {
+    const isDark = localStorage.getItem('theme') === 'dark';
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+        const icon = document.getElementById('theme-icon');
+        if (icon) icon.className = 'ti ti-sun';
+        Chart.defaults.color = '#94a3b8';
+    } else {
+        Chart.defaults.color = '#64748b';
+    }
+}
+
+function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark-mode');
+    document.getElementById('theme-icon').className = isDark ? 'ti ti-sun' : 'ti ti-moon';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    
+    Chart.defaults.color = isDark ? '#94a3b8' : '#64748b';
+    const gridColor = isDark ? '#334155' : '#f1f5f9';
+    
+    Object.values(activeCharts).forEach(chart => {
+        if (chart.options.scales) {
+            if (chart.options.scales.x && chart.options.scales.x.grid) chart.options.scales.x.grid.color = gridColor;
+            if (chart.options.scales.y && chart.options.scales.y.grid) chart.options.scales.y.grid.color = gridColor;
+        }
+        chart.update();
+    });
+}
+
+window.onload = () => {
+    initTheme();
+    initPageCharts('overview');
+};
