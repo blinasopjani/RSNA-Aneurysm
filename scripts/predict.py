@@ -1,6 +1,6 @@
 """
 =============================================================================
-RSNA 2025 — INFERENCE / PREDICTION MODULE
+NeuroVision AI — INFERENCE / PREDICTION MODULE
 =============================================================================
 Student   : Blina Sopjani | ID: 69401
 File      : predict.py
@@ -524,7 +524,7 @@ def run_inference_server():
 if __name__ == "__main__":
 
     print("\n" + "█" * 65)
-    print("  PREDICTION MODULE — RSNA ANEURYSM DETECTION")
+    print("  PREDICTION MODULE — NEUROVISION AI DETECTION")
     print("  Blina Sopjani | ID: 69401 | Universum College")
     print("█" * 65)
 

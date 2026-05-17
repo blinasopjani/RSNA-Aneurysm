@@ -1,6 +1,6 @@
 """
 =============================================================================
-RSNA 2025 — DICOM PREPROCESSING PIPELINE
+NeuroVision AI — DICOM PREPROCESSING PIPELINE
 =============================================================================
 Student   : Blina Sopjani | ID: 69401
 File      : preprocessing.py
@@ -663,7 +663,7 @@ def compute_dataset_stats(
 
 if __name__ == "__main__":
     print("\n" + "█" * 65)
-    print("  PREPROCESSING PIPELINE — RSNA ANEURYSM DETECTION")
+    print("  PREPROCESSING PIPELINE — NEUROVISION AI DETECTION")
     print("  Blina Sopjani | ID: 69401 | Universum College")
     print("█" * 65)
 

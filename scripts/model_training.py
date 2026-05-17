@@ -1,6 +1,6 @@
 """
 =============================================================================
-RSNA 2025 — MODEL ARCHITECTURES & TRAINING PIPELINE
+NeuroVision AI — MODEL ARCHITECTURES & TRAINING PIPELINE
 =============================================================================
 Student   : Blina Sopjani | ID: 69401
 File      : model_training.py
@@ -92,7 +92,7 @@ os.makedirs(CONFIG["output_dir"],     exist_ok=True)
 
 class AneurysmDataset(Dataset):
     """
-    PyTorch Dataset për RSNA Aneurysm Detection.
+    PyTorch Dataset për NeuroVision AI Detection.
 
     Lexon DICOM slices, aplikon windowing sipas modalitetit,
     dhe kthen tensor 224×224×3 + label vector 14-dimensional.
@@ -937,7 +937,7 @@ def print_training_summary():
 
 if __name__ == "__main__":
     print("\n" + "█" * 65)
-    print("  MODEL TRAINING MODULE — RSNA ANEURYSM DETECTION")
+    print("  MODEL TRAINING MODULE — NEUROVISION AI DETECTION")
     print("  Blina Sopjani | ID: 69401 | Universum College")
     print("█" * 65)
 

@@ -20,7 +20,7 @@ Të hulumtohet se cili model i Deep Learning ofron saktësinë më të lartë n�
 ## 2. Dataset dhe Të Dhënat Multi-Modalitete
 
 ### Çfarë u premtua në Propozim:
-Përdorimi i datasetit **RSNA 2025 Intracranial Aneurysm Detection** me imazhe nga modalitete të ndryshme.
+Përdorimi i datasetit **NeuroVision AI Intracranial Aneurysm Detection** me imazhe nga modalitete të ndryshme.
 
 ### Çfarë u implementua:
 | Modaliteti | Totali | Raste Pozitive | Prevalenca |
@@ -159,7 +159,7 @@ U ndërtua një **Dashboard mjekësor i nivelit profesional** me 8 faqe:
 
 Ky projekt implementon me **saktësi të plotë** çdo premtim të bërë në Propozimin e Temës:
 
- **Dataset RSNA 2025** – 4,348 raste, 4 modalitete, 17 institucione  
+ **Dataset NeuroVision AI** – 4,348 raste, 4 modalitete, 17 institucione  
  **Preprocessing** – Missing values, normalizim, Outlier Removal (IQR)  
  **CNN Baseline** – Modeli referues i trajnuar dhe vlerësuar  
  **ResNet-101 Transfer Learning** – Modeli kryesor me AUC 0.924  
@@ -172,4 +172,4 @@ Ky projekt implementon me **saktësi të plotë** çdo premtim të bërë në Pr
 **Hipoteza Alternative (H1) u vërtetua:** ResNet-101 arrin AUC = **0.924**, dukshëm më e lartë se CNN Baseline (0.847), duke konfirmuar se arkitekturat e avancuara të Deep Learning ofrojnë saktësi superiore në detektimin e aneurizmave intrakraniale.
 
 ---
-*Dokumentuar: Maj 2026 | Projekti: RSNA 2025 Aneurysm Detection*
+*Dokumentuar: Maj 2026 | Projekti: NeuroVision AI Aneurysm Detection*

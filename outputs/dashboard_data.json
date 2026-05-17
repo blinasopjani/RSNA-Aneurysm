@@ -3,7 +3,7 @@
     "student": "Blina Sopjani",
     "id": "69401",
     "thesis": "AI-Based Detection of Intracranial Aneurysms",
-    "dataset": "RSNA 2025 Intracranial Aneurysm Detection",
+    "dataset": "NeuroVision AI Intracranial Aneurysm Detection",
     "total_series": 4348
   },
   "class_distribution": {

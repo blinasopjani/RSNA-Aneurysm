@@ -1,6 +1,6 @@
 """
 =============================================================================
-RSNA 2025 — DATASET CONNECTION & LOADING MODULE
+NeuroVision AI — DATASET CONNECTION & LOADING MODULE
 =============================================================================
 Student   : Blina Sopjani | ID: 69401
 Dataset   : rsna-intracranial-aneurysm-detection (Kaggle Competition)

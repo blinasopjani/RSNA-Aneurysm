@@ -1,6 +1,6 @@
 """
 =============================================================================
-RSNA 2025 — DATABASE CONNECTION & INTEGRATION MODULE
+NeuroVision AI — DATABASE CONNECTION & INTEGRATION MODULE
 =============================================================================
 Student   : Blina Sopjani | ID: 69401
 File      : database.py
@@ -900,7 +900,7 @@ def run_full_db_pipeline(df_clean: pd.DataFrame, model_results: dict) -> Databas
 if __name__ == "__main__":
 
     print("\n" + "█" * 65)
-    print("  DATABASE MODULE — RSNA ANEURYSM DETECTION")
+    print("  DATABASE MODULE — NEUROVISION AI DETECTION")
     print("  Blina Sopjani | ID: 69401 | Universum College")
     print("█" * 65)
 

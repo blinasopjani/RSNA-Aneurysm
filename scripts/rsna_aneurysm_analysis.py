@@ -1,13 +1,13 @@
 """
 =============================================================================
-RSNA 2025 INTRACRANIAL ANEURYSM DETECTION
+NeuroVision AI INTRACRANIAL ANEURYSM DETECTION
 AI-Based Detection Using Deep Learning on Multi-Modal Medical Imaging
 =============================================================================
 Student   : Blina Sopjani
 ID        : 69401
 Email     : bs69401@universum-ks.org
 Program   : Computer Science — Universum College, Prishtina
-Dataset   : RSNA 2025 Intracranial Aneurysm Detection (Kaggle)
+Dataset   : NeuroVision AI Intracranial Aneurysm Detection (Kaggle)
 URL       : https://kaggle.com/competitions/rsna-intracranial-aneurysm-detection
 
 PIPELINE STRUCTURE:
@@ -125,7 +125,7 @@ def load_or_simulate_data(dataset_path=None):
     """
     Loads real train.csv if available, otherwise simulates a dataset
     with the exact same structure, types, and statistical properties
-    as the official RSNA 2025 dataset.
+    as the official NeuroVision AI dataset.
     """
     N = CONFIG["n_samples"]
 
@@ -528,7 +528,7 @@ def generate_plots(df, model_results, eda_results):
     fig = plt.figure(figsize=(20, 24))
     gs  = gridspec.GridSpec(4, 2, figure=fig, hspace=0.45, wspace=0.32)
     fig.suptitle(
-        "RSNA 2025 Intracranial Aneurysm Detection — Full Analysis\n"
+        "NeuroVision AI Intracranial Aneurysm Detection — Full Analysis\n"
         "Blina Sopjani | ID: 69401 | Universum College",
         fontsize=14, fontweight="bold", y=0.98
     )
@@ -687,7 +687,7 @@ def export_results(df, eda_results, model_results, corr):
         "meta": {
             "student": "Blina Sopjani", "id": "69401",
             "thesis": "AI-Based Detection of Intracranial Aneurysms",
-            "dataset": "RSNA 2025 Intracranial Aneurysm Detection",
+            "dataset": "NeuroVision AI Intracranial Aneurysm Detection",
             "total_series": N,
         },
         "class_distribution": {
@@ -724,7 +724,7 @@ def export_results(df, eda_results, model_results, corr):
 
 def main():
     print("\n" + "=" * 70)
-    print("  RSNA ANEURYSM DETECTION — FULL ANALYSIS PIPELINE")
+    print("  NEUROVISION AI DETECTION — FULL ANALYSIS PIPELINE")
     print("  Blina Sopjani | ID: 69401 | Universum College | 2025-2026")
     print("=" * 70)
 

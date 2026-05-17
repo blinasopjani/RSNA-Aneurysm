@@ -1,5 +1,5 @@
 # =============================================================================
-# RSNA 2025 — INTRACRANIAL ANEURYSM DETECTION
+# NeuroVision AI — INTRACRANIAL ANEURYSM DETECTION
 # Requirements File — Të gjitha varësitë e projektit
 # =============================================================================
 # Student   : Blina Sopjani | ID: 69401

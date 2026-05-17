@@ -1,4 +1,4 @@
-# RSNA 2025 — AI-Based Detection of Intracranial Aneurysms
+# NeuroVision AI — AI-Based Detection of Intracranial Aneurysms
 
 🚀 **Live Demo:** [Shiko Dashboard-in Këtu](https://blinasopjani.github.io/RSNA-Aneurysm/frontend/dashboard.html)
 
@@ -87,4 +87,4 @@ dashboard.html     → Frontend (hap direkt në browser)
 - **Python** · Flask, PyTorch, OpenCV, NumPy
 - **Deep Learning** · ResNet-101, CNN Baseline
 - **Frontend** · HTML5, CSS3, Chart.js, Tabler Icons
-- **Dataset** · RSNA 2025 Intracranial Aneurysm Detection (Kaggle)
+- **Dataset** · Global Intracranial Aneurysm Detection Dataset

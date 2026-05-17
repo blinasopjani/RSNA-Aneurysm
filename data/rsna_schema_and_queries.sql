@@ -1,11 +1,11 @@
 -- =============================================================================
--- RSNA 2025 INTRACRANIAL ANEURYSM DETECTION
+-- NeuroVision AI INTRACRANIAL ANEURYSM DETECTION
 -- PostgreSQL Database Schema, Queries & Views
 -- =============================================================================
 -- Student   : Blina Sopjani
 -- ID        : 69401
 -- Program   : Computer Science — Universum College, Prishtina
--- Dataset   : RSNA 2025 Intracranial Aneurysm Detection (Kaggle)
+-- Dataset   : NeuroVision AI Intracranial Aneurysm Detection (Kaggle)
 -- DB Engine : PostgreSQL 15+
 -- =============================================================================
 --
