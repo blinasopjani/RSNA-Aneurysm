@@ -1,6 +1,6 @@
 # NeuroVision AI — AI-Based Detection of Intracranial Aneurysms
 
-🚀 **Live Demo:** [Shiko Dashboard-in Këtu](https://blinasopjani.github.io/RSNA-Aneurysm/frontend/dashboard.html)
+**Live Demo:** [Shiko Dashboard-in Këtu](https://blinasopjani.github.io/RSNA-Aneurysm/frontend/dashboard.html)
 
 **Studente:** Blina Sopjani · ID: 69401  
 **Universiteti:** Universum · Computer Science  
