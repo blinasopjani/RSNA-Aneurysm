@@ -427,43 +427,4 @@ function resetInference() {
     document.getElementById('file-upload').value = '';
 }
 
-function initTheme() {
-    const isDark = localStorage.getItem('theme') === 'dark';
-    if (isDark) {
-        document.body.classList.add('dark-mode');
-        const icon = document.getElementById('theme-icon');
-        if (icon) icon.className = 'ti ti-sun';
-        Chart.defaults.color = '#94a3b8';
-    } else {
-        Chart.defaults.color = '#64748b';
-    }
-}
-
-function toggleTheme() {
-    console.log('Toggle theme called');
-    try {
-        const isDark = document.body.classList.toggle('dark-mode');
-        const icon = document.getElementById('theme-icon');
-        if (icon) icon.className = isDark ? 'ti ti-sun' : 'ti ti-moon';
-        
-        try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) { console.warn(e); }
-        
-        Chart.defaults.color = isDark ? '#94a3b8' : '#64748b';
-        const gridColor = isDark ? '#334155' : '#f1f5f9';
-        
-        Object.values(activeCharts).forEach(chart => {
-            if (chart && chart.options && chart.options.scales) {
-                if (chart.options.scales.x && chart.options.scales.x.grid) chart.options.scales.x.grid.color = gridColor;
-                if (chart.options.scales.y && chart.options.scales.y.grid) chart.options.scales.y.grid.color = gridColor;
-                chart.update();
-            }
-        });
-    } catch (err) {
-        console.error('Error in toggleTheme:', err);
-    }
-}
-
-window.onload = () => {
-    initTheme();
-    initPageCharts('overview');
-};
+window.onload = () => initPageCharts('overview');
