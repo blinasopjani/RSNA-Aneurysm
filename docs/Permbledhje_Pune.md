@@ -153,21 +153,39 @@ U ndërtua një **Dashboard mjekësor i nivelit profesional** me 8 faqe:
 | Institutions     | Kontributi global i 17 qendrave mjekësore                    |
 | Pipeline         | Procesi i pastrimit të të dhënave (Data Engineering)         |
 
+### 📱 Optimizimi për Pajisje Mobile (Responsive Design):
+Për të siguruar një prezantim dhe përdorim të shkëlqyer në çdo pajisje (Kompjuter, Tablet, Celular), u realizuan optimizime të avancuara të CSS:
+- **Inference Simulator:** Rregullimi i layout-it të kartës kryesore të skanimit dhe paneleve të metrikave për t'u përshtatur bukur pa u ngjeshur apo dalë jashtë ekranit në mobile.
+- **Treguesi i Statusit ("Ready for analysis"):** U zvogëlua madhësia e shkrimit dhe u zvogëlua padding-u posaçërisht në ekrane të ngushta.
+- **Header-i i Kartave:** Header-i i kartave tani kalon nga layout horizontal (flex-row) në atë vertikal (flex-column) në ekrane nën 600px, duke shmangur mbivendosjen e teksteve dhe elementeve.
+
+---
+
+## 9. Sistemi Light / Dark Mode dhe Profilizimi SaaS
+
+Sistemi përfshin një eksperiencë moderne të menaxhimit të temave vizuale dhe integritetit të profilit të studentit sipas standardeve më të larta të dizajnit sot:
+
+- **Pozicionimi Logjik (SaaS Sidebar Footer):** Emri i studentit (**Blina Sopjani**), numri i indeksit (**ID: 69401**) dhe butoni i ndërrimit të temave u zhvendosën nga pjesa e sipërme (Top-bar) direkte në fund të menusë anësore (Sidebar Footer). Kjo lë hapësirën kryesore të dashboard-it të pastër dhe i jep aplikacionit një pamje jashtëzakonisht profesionale.
+- **Sistemi i Ruajtjes (Local Storage Memory):** Përzgjedhja e temës ruhet në browser përmes `localStorage`. Herën tjetër që përdoruesi viziton faqen, ajo ngarkohet automatikisht në temën e zgjedhur.
+- **Grafikët Dinamikë (Chart.js Adaptation):** Kur ndërrohet tema, grafikët nuk prishen, por përshtaten në kohë reale. Rrjetat e grafikëve dhe shkrimet e akseve kalojnë nga ngjyra e hapur (për Light Mode) në ngjyrë të errët me kontrast të lartë (për Dark Mode).
+- **Tranzicion i Sigurt (Try-Catch Isolation):** Kodi i ndërrimit të temës është i izoluar me bllok try-catch, duke shmangur çdo ndërprerje apo bllokim të mundshëm të aplikacionit.
+
 ---
 
 ## Përfundim
 
 Ky projekt implementon me **saktësi të plotë** çdo premtim të bërë në Propozimin e Temës:
 
- **Dataset NeuroVision AI** – 4,348 raste, 4 modalitete, 17 institucione  
- **Preprocessing** – Missing values, normalizim, Outlier Removal (IQR)  
- **CNN Baseline** – Modeli referues i trajnuar dhe vlerësuar  
- **ResNet-101 Transfer Learning** – Modeli kryesor me AUC 0.924  
- **Hyperparameter Tuning** – Optimizimi i Learning Rate (1e-3 = best)  
- **Metrikat e plota** – AUC, Accuracy, Precision, Recall, F1-Score  
- **Klasifikimi multi-label** – Lokacioni anatomik i aneurizmës  
- **Inference Simulator Live** – Sistem i plotë diagnostikimi në kohë reale  
- **Dashboard Profesional** – 8 faqe interaktive me vizualizime të avancuara  
+  **Dataset NeuroVision AI** – 4,348 raste, 4 modalitete, 17 institucione  
+  **Preprocessing** – Missing values, normalizim, Outlier Removal (IQR)  
+  **CNN Baseline** – Modeli referues i trajnuar dhe vlerësuar  
+  **ResNet-101 Transfer Learning** – Modeli kryesor me AUC 0.924  
+  **Hyperparameter Tuning** – Optimizimi i Learning Rate (1e-3 = best)  
+  **Metrikat e plota** – AUC, Accuracy, Precision, Recall, F1-Score  
+  **Klasifikimi multi-label** – Lokacioni anatomik i aneurizmës  
+  **Inference Simulator Live** – Sistem i plotë diagnostikimi në kohë reale  
+  **Dashboard Profesional & Responsive** – 8 faqe interaktive me vizualizime të avancuara, i optimizuar për mobile  
+  **Light & Dark Mode** – Sistem modern i menaxhimit të temave me memorie dhe grafikë dinamikë  
 
 **Hipoteza Alternative (H1) u vërtetua:** ResNet-101 arrin AUC = **0.924**, dukshëm më e lartë se CNN Baseline (0.847), duke konfirmuar se arkitekturat e avancuara të Deep Learning ofrojnë saktësi superiore në detektimin e aneurizmave intrakraniale.
 
