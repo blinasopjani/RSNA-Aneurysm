@@ -32,12 +32,33 @@ const REAL_DATA = {
 
 const activeCharts = {};
 
+function toggleMobileMenu() {
+    const nav = document.querySelector('.nav');
+    const overlay = document.getElementById('mobile-overlay');
+    nav.classList.toggle('active');
+    
+    if (nav.classList.contains('active')) {
+        overlay.style.display = 'block';
+        setTimeout(() => overlay.style.opacity = '1', 10);
+    } else {
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.style.display = 'none', 300);
+    }
+}
+
 function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     event.currentTarget.classList.add('active');
     document.getElementById('page-title').innerText = id.charAt(0).toUpperCase() + id.slice(1).replace('-', ' ');
+    
+    // Close mobile menu if open
+    const nav = document.querySelector('.nav');
+    const overlay = document.getElementById('mobile-overlay');
+    if (nav && nav.classList.contains('active')) {
+        toggleMobileMenu();
+    }
     
     initPageCharts(id);
 }
