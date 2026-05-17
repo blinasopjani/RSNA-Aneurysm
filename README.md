@@ -1,5 +1,7 @@
 # RSNA 2025 — AI-Based Detection of Intracranial Aneurysms
 
+🚀 **Live Demo:** [Shiko Dashboard-in Këtu](https://blinasopjani.github.io/RSNA-Aneurysm/frontend/dashboard.html)
+
 **Studente:** Blina Sopjani · ID: 69401  
 **Universiteti:** Universum · Computer Science  
 **Modeli kryesor:** ResNet-101 (Transfer Learning) · AUC: 0.924  
