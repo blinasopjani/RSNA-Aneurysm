@@ -1,193 +1,75 @@
-# Përmbledhje e Punës së Kryer  
+# Përmbledhje e Punës së Kryer (Koncize)  
 ## Tema: AI-Based Detection of Intracranial Aneurysms Using Deep Learning on Multi-Modal Medical Imaging  
 **Studente:** Blina Sopjani | **ID:** 69401 | **Program:** Computer Science  
 
 ---
 
 ## 1. Pyetja Kërkimore dhe Hipoteza
-
-### Çfarë u premtua në Propozim:
-Të hulumtohet se cili model i Deep Learning ofron saktësinë më të lartë në detektimin e aneurizmave intrakraniale nëpër modalitete imazhesh si CTA, MRA dhe MRI.
-
-### Çfarë u implementua:
-- U bë krahasim i drejtpërdrejtë midis **CNN Baseline** dhe **ResNet-50 / ResNet-101** (Transfer Learning)
-- Rezultatet konfirmojnë **H1 (Hipotezën Alternative)**: ResNet-101 performon dukshëm më mirë
-- **AUC final: ResNet-101 → 0.924** vs CNN Baseline → 0.847
-- Krahasimi është i vizualizuar në faqen "AI Models" të Dashboard-it
+*   **Objektivi:** Hulumtimi i saktësisë së Deep Learning në detektimin e aneurizmave intrakraniale në imazhe mjekësore (CTA, MRA, MRI).
+*   **Hipoteza (H1):** Arkitekturat e avancuara me Transfer Learning (ResNet-101) performojnë më mirë se modelem konvolucionale bazë (CNN Baseline).
+*   **Rezultati:** Hipoteza **H1 u vërtetua**. ResNet-101 arriti **AUC = 0.924** (vs. CNN Baseline = 0.847).
 
 ---
 
-## 2. Dataset dhe Të Dhënat Multi-Modalitete
+## 2. Dataseti Multi-Modal (NeuroVision AI)
+Analizë globale e **4,348 rasteve** nga **17 institucione mjekësore** ndërkombëtare:
 
-### Çfarë u premtua në Propozim:
-Përdorimi i datasetit **NeuroVision AI Intracranial Aneurysm Detection** me imazhe nga modalitete të ndryshme.
-
-### Çfarë u implementua:
-| Modaliteti | Totali | Raste Pozitive | Prevalenca |
-|------------|--------|----------------|------------|
-| CTA        | 1,808  | 973            | 53.8%      |
-| MRA        | 1,252  | 555            | 44.3%      |
-| MRI T1     | 305    | 77             | 25.2%      |
-| MRI T2     | 983    | 258            | 26.2%      |
-| **Total**  | **4,348** | **1,863**   | **42.85%** |
-
-- Dataset u analizua nga **17 qendra mjekësore ndërkombëtare** (Duke Univ., Stanford, Mayo Clinic, etj.)
-- Distribucioni i klasave: 1,863 Pozitive vs. 2,485 Negative
+| Modaliteti | Totali i Imazheve | Raste Pozitive | Prevalenca |
+|------------|------------------|----------------|------------|
+| CTA        | 1,808            | 973            | 53.8%      |
+| MRA        | 1,252            | 555            | 44.3%      |
+| MRI T1     | 305              | 77             | 25.2%      |
+| MRI T2     | 983              | 258            | 26.2%      |
+| **Total**  | **4,348**        | **1,863**      | **42.85%** |
 
 ---
 
-## 3. Preprocessing dhe Pastrimi i Të Dhënave
-
-### Çfarë u premtua në Propozim:
-Përpunim i imazheve DICOM duke përfshirë normalizim, korrigjim të mungesave dhe trajnim me weighted loss functions.
-
-### Çfarë u implementua (Data Pipeline):
-
-**Hapi 1 – Missing Value Detection**  
-U identifikuan fushat boshe në dataset: 137 raste në PatientAge, 67 raste në PatientSex, 96 raste në SliceThickness.
-
-**Hapi 2 – Sex Imputation (Mode)**  
-Vlerat munguese të gjinisë u plotësuan me vlerën statistikisht më të shpeshtë (Mode Imputation).
-
-**Hapi 3 – Age Imputation (Median)**  
-Vlerat munguese të moshës u zëvendësuan me medianën e grup-moshave përkatëse.
-
-**Hapi 4 – Outlier Removal (IQR)**  
-U zbuluan dhe u korrigjuan **40 raste outlier** në parametrin PixelSpacing duke përdorur metodën Interquartile Range (IQR) Clipping, duke siguruar dimensionet e imazheve brenda normave mjekësore.
+## 3. Preprocessing & Data Engineering
+*   **Imputimi i të Dhënave:** Plotësimi i vlerave bosh për gjininë (Mode Imputation) dhe moshën (Median Imputation).
+*   **Pastrimi i Outliers:** Përdorimi i metodës **IQR Clipping** në parametrin *PixelSpacing* (40 raste të korrigjuara), duke parandaluar deformimet mjekësore.
+*   **Normalizimi:** Standardizim i dimensioneve 224x224 pixels për modelet e AI.
 
 ---
 
-## 4. Modelet e AI dhe Arkitektura
-
-### Çfarë u premtua në Propozim:
-Zhvillimi i dy modeleve: CNN bazë dhe ResNet me Transfer Learning, duke aplikuar hyperparameter tuning dhe optimizim me Adam.
-
-### Çfarë u implementua:
-
-#### Model 1: CNN Baseline
-- Arkitekturë konvolucionale bazë
-- Shërbeu si **pikë referimi (benchmark)**
-- Humbja e trajnimit konvergjoi pas rreth 14 epokave
-
-#### Model 2: ResNet-101 (Transfer Learning)
-- Arkitekturë 101 shtresa me **Residual Blocks (Skip Connections)**
-- Input size: 224×224 pixels (3-channel normalization)
-- Optimizuesi: **AdamW me Cosine Annealing**
-- Loss Function: **Weighted Binary Cross-Entropy** (për trajtimin e class imbalance)
-- Trajnim: **50 Epoka** me konvergjencë stabile
-
-#### Hyperparameter Optimization (HPO):
-| Learning Rate | AUC Rezultati |
-|---------------|---------------|
-| 1e-1          | 0.650         |
-| 1e-2          | 0.820         |
-| **1e-3**      | **0.924** ← Best |
-| 1e-4          | 0.880         |
+## 4. Arkitektura e AI & Optimizimi (HPO)
+*   **CNN Baseline:** Model konvolucional i thjeshtë (benchmark).
+*   **ResNet-101 (Transfer Learning):** Model i avancuar me 101 shtresa (Residual Blocks).
+    *   *Loss Function:* Weighted Binary Cross-Entropy (për shkak të imbalance të klasave).
+    *   *Optimizer:* AdamW me Cosine Annealing.
+*   **Hyperparameter Tuning (HPO):** Learning Rate **1e-3** doli më i miri me AUC **0.924** (1e-1 = 0.650, 1e-2 = 0.820, 1e-4 = 0.880).
 
 ---
 
-## 5. Metrikat e Vlerësimit
+## 5. Metrikat e Performancës (Krahasimi)
 
-### Çfarë u premtua në Propozim:
-Vlerësim me **AUC-ROC** (primare), Accuracy, Precision, Recall dhe F1-Score.
-
-### Çfarë u arrit:
-
-| Model          | AUC-ROC | Accuracy | Precision | Recall | F1-Score |
-|----------------|---------|----------|-----------|--------|----------|
-| CNN Baseline   | 0.847   | 0.821    | 0.769     | 0.743  | 0.756    |
-| ResNet-50      | 0.913   | 0.886    | 0.851     | 0.832  | 0.841    |
+| Model | AUC-ROC | Accuracy | Precision | Recall | F1-Score |
+|---|---|---|---|---|---|
+| CNN Baseline | 0.847 | 0.821 | 0.769 | 0.743 | 0.756 |
+| ResNet-50 | 0.913 | 0.886 | 0.851 | 0.832 | 0.841 |
 | **ResNet-101** | **0.924** | **0.894** | **0.863** | **0.847** | **0.855** |
 
-**Kriva ROC e ResNet-101** tregon performancë të shkëlqyer me AUC = 0.924, duke kaluar ndjeshëm modelin bazë dhe duke vërtetuar Hipotezën Alternative H1.
+---
+
+## 6. Klasifikimi Multi-Label & Inference Sim
+*   **Lokacioni Anatomik:** Modeli detekton aneurizmën dhe lokacionin e saj (p.sh., *Anterior Communicating Artery*, *Middle Cerebral Artery*, etj.).
+*   **Inference Simulator Live:** Zhvillimi i sistemit në kohë reale ku përdoruesi ngarkon imazhin dhe merr brenda pak sekondave:
+    1. Vendimin Binar (Pozitiv/Negativ)
+    2. Nivelin e Sigurisë (Confidence %)
+    3. Lokacionin Anatomik të detektuar
+    4. Modalitetin e imazhit.
 
 ---
 
-## 6. Klasifikimi Multi-Label (Lokacioni Anatomik)
-
-### Çfarë u premtua në Propozim:
-Klasifikimi jo vetëm binar (ka/nuk ka aneurizëm), por edhe identifikimi i **lokacionit anatomik** të aneurizmës.
-
-### Çfarë u implementua:
-| Lokacioni Anatomik                 | Frekuenca |
-|------------------------------------|-----------|
-| Anterior Communicating Artery      | 363       |
-| Left Supraclinoid ICA              | 330       |
-| Right Middle Cerebral Artery (MCA) | 294       |
-| Right Supraclinoid ICA             | 278       |
-| Left Middle Cerebral Artery        | 219       |
-| Other Posterior Circulation        | 113       |
-| Basilar Tip                        | 110       |
-
-- Faqja **"Inference Simulator"** kthen si rezultat: binar (Positive/Negative) + lokacionin anatomik + nivelin e sigurisë (Confidence %)
-
----
-
-## 7. Sistemi i Inferimit (Inference Simulator)
-
-Është ndërtuar një **sistem i plotë inferimi në kohë reale** i integruar në Dashboard:
-
-- **Upload**: Mund të ngarkoni çdo imazh mjekësor (DICOM/PNG)
-- **Analiza**: API-ja (ResNet-101) analizon imazhin dhe kthen rezultatin brenda sekondave
-- **Raporti Diagnostikues** përfshin:
-  - Vendimi binar (Aneurysm Detected / Negative - Healthy)
-  - Niveli i Confidence (%)
-  - Lokacioni Anatomik i aneurizmës
-  - Modaliteti i detektimit (CTA/MRA)
-- Backend ndodhet në `backend/api.py` (Python/Flask, Port 5005)
-
----
-
-## 8. Dashboard Interaktiv (Web Application)
-
-U ndërtua një **Dashboard mjekësor i nivelit profesional** me 8 faqe:
-
-| Faqja            | Përmbajtja                                                   |
-|------------------|--------------------------------------------------------------|
-| Overview         | KPI-të kryesore, distribucioni i klasave, krahasimi i modeleve |
-| Data Analysis    | Shpërndarja gjinore/moshe, prevalenca sipas modalitetit       |
-| Data Cleaning    | Tabelat e missing values dhe hapat e pastrimit               |
-| AI Models        | Tabela krahasuese e metrikave, ROC Curve, HPO                |
-| Training History | Konvergjenca e trajnimit për 50 Epoka (ResNet vs CNN)        |
-| Inference Sim    | Simuluesi live i detektimit me upload imazhi                 |
-| Institutions     | Kontributi global i 17 qendrave mjekësore                    |
-| Pipeline         | Procesi i pastrimit të të dhënave (Data Engineering)         |
-
-### 📱 Optimizimi për Pajisje Mobile (Responsive Design):
-Për të siguruar një prezantim dhe përdorim të shkëlqyer në çdo pajisje (Kompjuter, Tablet, Celular), u realizuan optimizime të avancuara të CSS:
-- **Inference Simulator:** Rregullimi i layout-it të kartës kryesore të skanimit dhe paneleve të metrikave për t'u përshtatur bukur pa u ngjeshur apo dalë jashtë ekranit në mobile.
-- **Treguesi i Statusit ("Ready for analysis"):** U zvogëlua madhësia e shkrimit dhe u zvogëlua padding-u posaçërisht në ekrane të ngushta.
-- **Header-i i Kartave:** Header-i i kartave tani kalon nga layout horizontal (flex-row) në atë vertikal (flex-column) në ekrane nën 600px, duke shmangur mbivendosjen e teksteve dhe elementeve.
-
----
-
-## 9. Sistemi Light / Dark Mode dhe Profilizimi SaaS
-
-Sistemi përfshin një eksperiencë moderne të menaxhimit të temave vizuale dhe integritetit të profilit të studentit sipas standardeve më të larta të dizajnit sot:
-
-- **Pozicionimi Logjik (SaaS Sidebar Footer):** Emri i studentit (**Blina Sopjani**), numri i indeksit (**ID: 69401**) dhe butoni i ndërrimit të temave u zhvendosën nga pjesa e sipërme (Top-bar) direkte në fund të menusë anësore (Sidebar Footer). Kjo lë hapësirën kryesore të dashboard-it të pastër dhe i jep aplikacionit një pamje jashtëzakonisht profesionale.
-- **Sistemi i Ruajtjes (Local Storage Memory):** Përzgjedhja e temës ruhet në browser përmes `localStorage`. Herën tjetër që përdoruesi viziton faqen, ajo ngarkohet automatikisht në temën e zgjedhur.
-- **Grafikët Dinamikë (Chart.js Adaptation):** Kur ndërrohet tema, grafikët nuk prishen, por përshtaten në kohë reale. Rrjetat e grafikëve dhe shkrimet e akseve kalojnë nga ngjyra e hapur (për Light Mode) në ngjyrë të errët me kontrast të lartë (për Dark Mode).
-- **Tranzicion i Sigurt (Try-Catch Isolation):** Kodi i ndërrimit të temës është i izoluar me bllok try-catch, duke shmangur çdo ndërprerje apo bllokim të mundshëm të aplikacionit.
+## 7. Dashboard Interaktiv & UI/UX Moderne
+U zhvillua një **aplikacion dashboard profesional me 8 faqe** (Overview, Data Analysis, Data Cleaning, AI Models, Training, Inference, Institutions, Pipeline) me këto veçori moderne:
+*   **Dizajn Plotësisht Responsive:** I optimizuar për pajisje mobile dhe tableta (simulatori dhe kartat përshtaten automatikisht).
+*   **Sistemi Light / Dark Mode:** Buton dinamik me memorie lokale (`localStorage`) ku grafikët e Chart.js ndryshojnë në kohë reale për t'u përshtatur me temën.
+*   **Profilizimi SaaS (Sidebar Footer):** Emri i studentit, ID dhe butoni i temës janë integruar në mënyrë tejet elegante në fund të menusë anësore.
 
 ---
 
 ## Përfundim
-
-Ky projekt implementon me **saktësi të plotë** çdo premtim të bërë në Propozimin e Temës:
-
-  **Dataset NeuroVision AI** – 4,348 raste, 4 modalitete, 17 institucione  
-  **Preprocessing** – Missing values, normalizim, Outlier Removal (IQR)  
-  **CNN Baseline** – Modeli referues i trajnuar dhe vlerësuar  
-  **ResNet-101 Transfer Learning** – Modeli kryesor me AUC 0.924  
-  **Hyperparameter Tuning** – Optimizimi i Learning Rate (1e-3 = best)  
-  **Metrikat e plota** – AUC, Accuracy, Precision, Recall, F1-Score  
-  **Klasifikimi multi-label** – Lokacioni anatomik i aneurizmës  
-  **Inference Simulator Live** – Sistem i plotë diagnostikimi në kohë reale  
-  **Dashboard Profesional & Responsive** – 8 faqe interaktive me vizualizime të avancuara, i optimizuar për mobile  
-  **Light & Dark Mode** – Sistem modern i menaxhimit të temave me memorie dhe grafikë dinamikë  
-
-**Hipoteza Alternative (H1) u vërtetua:** ResNet-101 arrin AUC = **0.924**, dukshëm më e lartë se CNN Baseline (0.847), duke konfirmuar se arkitekturat e avancuara të Deep Learning ofrojnë saktësi superiore në detektimin e aneurizmave intrakraniale.
+Projekti realizon me saktësi 100% çdo premtim të propozimit: nga përpunimi i datasetit global, te trajnimi i modeleve të avancuara të Deep Learning, e deri te krijimi i një sistemi mjekësor interaktiv live me saktësi të lartë (**AUC = 0.924**).
 
 ---
 *Dokumentuar: Maj 2026 | Projekti: NeuroVision AI Aneurysm Detection*
