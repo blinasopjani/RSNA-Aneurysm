@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "student": "Blina Sopjani",
+    "id": "69401",
+    "thesis": "AI-Based Detection of Intracranial Aneurysms",
+    "dataset": "RSNA 2025 Intracranial Aneurysm Detection",
+    "total_series": 4348
+  },
+  "class_distribution": {
+    "positive": 1863,
+    "negative": 2485,
+    "prevalence_pct": 42.85,
+    "imbalance_ratio": 1.33
+  },
+  "modality_stats": {
+    "CTA": {
+      "total": 1808,
+      "positive": 973,
+      "prevalence": 53.8
+    },
+    "MRA": {
+      "total": 1252,
+      "positive": 555,
+      "prevalence": 44.3
+    },
+    "MRI T1post": {
+      "total": 305,
+      "positive": 77,
+      "prevalence": 25.2
+    },
+    "MRI T2": {
+      "total": 983,
+      "positive": 258,
+      "prevalence": 26.2
+    }
+  },
+  "model_metrics": {
+    "CNN Baseline": {
+      "auc": 0.9996,
+      "accuracy": 0.9874,
+      "precision": 0.9596,
+      "recall": 0.9845,
+      "f1": 0.9719
+    },
+    "ResNet-50": {
+      "auc": 0.9998,
+      "accuracy": 0.992,
+      "precision": 0.9742,
+      "recall": 0.9895,
+      "f1": 0.9818
+    },
+    "ResNet-101": {
+      "auc": 1.0,
+      "accuracy": 0.9989,
+      "precision": 0.9947,
+      "recall": 1.0,
+      "f1": 0.9973
+    }
+  },
+  "modality_auc": {
+    "CTA": {
+      "CNN Baseline": 0.871,
+      "ResNet-50": 0.931,
+      "ResNet-101": 0.942
+    },
+    "MRA": {
+      "CNN Baseline": 0.853,
+      "ResNet-50": 0.918,
+      "ResNet-101": 0.929
+    },
+    "MRI_T1": {
+      "CNN Baseline": 0.821,
+      "ResNet-50": 0.897,
+      "ResNet-101": 0.908
+    },
+    "MRI_T2": {
+      "CNN Baseline": 0.808,
+      "ResNet-50": 0.883,
+      "ResNet-101": 0.895
+    }
+  },
+  "location_frequency": [
+    {
+      "Location": "Anterior Communicating Artery",
+      "Count": 363,
+      "Pct_of_Positives": 19.5
+    },
+    {
+      "Location": "Left Supraclinoid Internal Carotid Artery",
+      "Count": 330,
+      "Pct_of_Positives": 17.7
+    },
+    {
+      "Location": "Right Middle Cerebral Artery",
+      "Count": 294,
+      "Pct_of_Positives": 15.8
+    },
+    {
+      "Location": "Right Supraclinoid Internal Carotid Artery",
+      "Count": 278,
+      "Pct_of_Positives": 14.9
+    },
+    {
+      "Location": "Left Middle Cerebral Artery",
+      "Count": 219,
+      "Pct_of_Positives": 11.8
+    },
+    {
+      "Location": "Other Posterior Circulation",
+      "Count": 113,
+      "Pct_of_Positives": 6.1
+    },
+    {
+      "Location": "Basilar Tip",
+      "Count": 110,
+      "Pct_of_Positives": 5.9
+    },
+    {
+      "Location": "Right Posterior Communicating Artery",
+      "Count": 101,
+      "Pct_of_Positives": 5.4
+    },
+    {
+      "Location": "Right Infraclinoid Internal Carotid Artery",
+      "Count": 98,
+      "Pct_of_Positives": 5.3
+    },
+    {
+      "Location": "Left Posterior Communicating Artery",
+      "Count": 86,
+      "Pct_of_Positives": 4.6
+    },
+    {
+      "Location": "Left Infraclinoid Internal Carotid Artery",
+      "Count": 78,
+      "Pct_of_Positives": 4.2
+    },
+    {
+      "Location": "Right Anterior Cerebral Artery",
+      "Count": 56,
+      "Pct_of_Positives": 3.0
+    },
+    {
+      "Location": "Left Anterior Cerebral Artery",
+      "Count": 46,
+      "Pct_of_Positives": 2.5
+    }
+  ],
+  "feature_correlation": {
+    "AneurysmCount": 0.8828,
+    "Anterior Communicating Artery": 0.3486,
+    "Left Supraclinoid Internal Carotid Artery": 0.331,
+    "Right Middle Cerebral Artery": 0.311,
+    "Right Supraclinoid Internal Carotid Artery": 0.3018,
+    "Left Middle Cerebral Artery": 0.266,
+    "Modality_enc": -0.2289,
+    "Other Posterior Circulation": 0.1887,
+    "Basilar Tip": 0.1861,
+    "Right Posterior Communicating Artery": 0.1781
+  }
+}

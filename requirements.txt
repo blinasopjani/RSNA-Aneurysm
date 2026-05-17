@@ -1,0 +1,95 @@
+# =============================================================================
+# RSNA 2025 — INTRACRANIAL ANEURYSM DETECTION
+# Requirements File — Të gjitha varësitë e projektit
+# =============================================================================
+# Student   : Blina Sopjani | ID: 69401
+# Program   : Computer Science — Universum College, Prishtina
+#
+# INSTALIM:
+#   pip install -r requirements.txt
+#
+# GPU support (opsional, nëse ke NVIDIA GPU):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#
+# CPU only:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# =============================================================================
+
+
+# ─── DATA MANIPULATION ────────────────────────────────────────────────────────
+pandas>=2.0.0             # Lexim CSV, DataFrame processing, EDA
+numpy>=1.24.0             # Array operations, numerical computing
+polars>=0.19.0            # High-performance DataFrames (RSNA submission format)
+
+
+# ─── MACHINE LEARNING ─────────────────────────────────────────────────────────
+scikit-learn>=1.3.0       # ROC-AUC, confusion matrix, train/val/test split
+scipy>=1.11.0             # Signal processing, statistical tests, image zoom
+
+
+# ─── DEEP LEARNING ────────────────────────────────────────────────────────────
+torch>=2.1.0              # PyTorch framework — CNN + ResNet training
+torchvision>=0.16.0       # ResNet-50/101 pretrained weights, transforms
+
+
+# ─── MEDICAL IMAGING ──────────────────────────────────────────────────────────
+pydicom>=2.4.0            # Lexim skedarësh DICOM (.dcm)
+nibabel>=5.1.0            # Lexim NifTI segmentations (.nii.gz)
+scikit-image>=0.21.0      # Image resize, anti-aliasing
+opencv-python>=4.8.0      # Image processing, fallback resize
+
+
+# ─── DATA VISUALIZATION ───────────────────────────────────────────────────────
+matplotlib>=3.7.0         # Static plots — ROC curves, confusion matrix, EDA
+seaborn>=0.12.0           # Statistical visualization — heatmaps, distributions
+
+
+# ─── KAGGLE / DATASET CONNECTION ──────────────────────────────────────────────
+kaggle>=1.5.16            # Kaggle CLI — dataset download
+kagglehub>=0.2.0          # kagglehub — automatic download (Metoda A)
+
+
+# ─── DATABASE ─────────────────────────────────────────────────────────────────
+sqlalchemy>=2.0.0         # ORM për PostgreSQL — eksport i rezultateve
+psycopg2-binary>=2.9.0    # PostgreSQL driver
+
+
+# ─── UTILITIES ────────────────────────────────────────────────────────────────
+tqdm>=4.65.0              # Progress bars gjatë DICOM loading
+pathlib2>=2.3.7           # Path handling (Python 3.10+ ka pathlib built-in)
+python-dotenv>=1.0.0      # .env file support (Kaggle API keys)
+
+
+# ─── JUPYTER / NOTEBOOK (opsional) ───────────────────────────────────────────
+# jupyter>=1.0.0
+# ipykernel>=6.25.0
+# ipywidgets>=8.1.0
+
+
+# =============================================================================
+# VERSIONI I PYTHON-IT I REKOMANDUAR: 3.10 – 3.11
+#
+# VERIFIKIM INSTALIMI:
+#   python -c "import torch; print('PyTorch:', torch.__version__)"
+#   python -c "import torch; print('CUDA:', torch.cuda.is_available())"
+#   python -c "import pydicom; print('pydicom:', pydicom.__version__)"
+#   python -c "import pandas; print('pandas:', pandas.__version__)"
+#
+# STRUKTURA E PROJEKTIT:
+#   rsna_aneurysm/
+#   ├── dataset_connection.py   ← Lidhja me Kaggle (3 metoda)
+#   ├── preprocessing.py        ← DICOM windowing + normalizim
+#   ├── model_training.py       ← CNN + ResNet arkitektura + training
+#   ├── predict.py              ← Inference (formati zyrtar RSNA)
+#   ├── rsna_aneurysm_analysis.py ← EDA + Data Cleaning + Evaluim
+#   ├── rsna_schema_and_queries.sql ← PostgreSQL schema + queries
+#   ├── requirements.txt        ← Ky file
+#   ├── checkpoints/            ← Model checkpoints (.pt files)
+#   ├── outputs/                ← CSV, JSON, PNG outputs
+#   └── data/                   ← Dataset (pas shkarkimit nga Kaggle)
+#       └── rsna-intracranial-aneurysm-detection/
+#           ├── train.csv
+#           ├── train_localizers.csv
+#           ├── series/
+#           └── segmentations/
+# =============================================================================
