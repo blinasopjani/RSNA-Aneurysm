@@ -231,6 +231,8 @@ tr td:last-child { border-radius: 0 12px 12px 0; }
 }
 .medical-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
 
+.inference-card { padding: 40px; }
+
 .status-indicator {
     padding: 10px 20px;
     background: #f1f5f9;
@@ -355,7 +357,7 @@ tr td:last-child { border-radius: 0 12px 12px 0; }
         gap: 15px; 
     }
     
-    .card { padding: 20px; }
+    .card, .inference-card { padding: 20px; }
     
     table { display: block; overflow-x: auto; white-space: nowrap; }
     
