@@ -372,8 +372,8 @@ tr td:last-child { border-radius: 0 12px 12px 0; }
         gap: 12px;
     }
     .status-indicator {
-        font-size: 0.8rem;
-        padding: 6px 12px;
+        font-size: 0.7rem;
+        padding: 4px 8px;
     }
     #scan-overlay { padding: 20px; text-align: center; }
     .medical-btn { font-size: 0.9rem; padding: 12px 20px; }
