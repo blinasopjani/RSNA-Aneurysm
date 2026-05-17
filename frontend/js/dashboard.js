@@ -440,20 +440,27 @@ function initTheme() {
 }
 
 function toggleTheme() {
-    const isDark = document.body.classList.toggle('dark-mode');
-    document.getElementById('theme-icon').className = isDark ? 'ti ti-sun' : 'ti ti-moon';
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    
-    Chart.defaults.color = isDark ? '#94a3b8' : '#64748b';
-    const gridColor = isDark ? '#334155' : '#f1f5f9';
-    
-    Object.values(activeCharts).forEach(chart => {
-        if (chart.options.scales) {
-            if (chart.options.scales.x && chart.options.scales.x.grid) chart.options.scales.x.grid.color = gridColor;
-            if (chart.options.scales.y && chart.options.scales.y.grid) chart.options.scales.y.grid.color = gridColor;
-        }
-        chart.update();
-    });
+    console.log('Toggle theme called');
+    try {
+        const isDark = document.body.classList.toggle('dark-mode');
+        const icon = document.getElementById('theme-icon');
+        if (icon) icon.className = isDark ? 'ti ti-sun' : 'ti ti-moon';
+        
+        try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) { console.warn(e); }
+        
+        Chart.defaults.color = isDark ? '#94a3b8' : '#64748b';
+        const gridColor = isDark ? '#334155' : '#f1f5f9';
+        
+        Object.values(activeCharts).forEach(chart => {
+            if (chart && chart.options && chart.options.scales) {
+                if (chart.options.scales.x && chart.options.scales.x.grid) chart.options.scales.x.grid.color = gridColor;
+                if (chart.options.scales.y && chart.options.scales.y.grid) chart.options.scales.y.grid.color = gridColor;
+                chart.update();
+            }
+        });
+    } catch (err) {
+        console.error('Error in toggleTheme:', err);
+    }
 }
 
 window.onload = () => {
