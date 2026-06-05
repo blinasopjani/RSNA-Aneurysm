@@ -46,16 +46,15 @@ function toggleMobileMenu() {
     }
 }
 
-function showPage(id) {
+function showPage(id, event) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
-    event.currentTarget.classList.add('active');
+    if (event && event.currentTarget) event.currentTarget.classList.add('active');
     document.getElementById('page-title').innerText = id.charAt(0).toUpperCase() + id.slice(1).replace('-', ' ');
     
     // Close mobile menu if open
     const nav = document.querySelector('.nav');
-    const overlay = document.getElementById('mobile-overlay');
     if (nav && nav.classList.contains('active')) {
         toggleMobileMenu();
     }
@@ -123,9 +122,9 @@ function initPageCharts(id) {
     }
 
     if (id === 'institutions') {
-        const instLabels = ['Mayo Clinic', 'Stanford', 'China Med', 'Liverpool', 'Duke Univ.', 'Stanford', 'UCSF'];
-        const posData = [142, 120, 98, 85, 77, 65, 54];
-        const negData = [210, 180, 150, 140, 130, 110, 90];
+        const instLabels = ['Mayo Clinic', 'Stanford Med.', 'China Med. Univ.', 'Liverpool NHS', 'Duke Univ.', 'UCSF', 'Johns Hopkins', 'Tokyo Med.', 'Charité Berlin', 'Toronto Gen.'];
+        const posData = [142, 120, 98, 85, 77, 65, 54, 48, 41, 39];
+        const negData = [210, 180, 150, 140, 130, 110, 90, 80, 75, 70];
         
         if (activeCharts['chart-institutions']) activeCharts['chart-institutions'].destroy();
         activeCharts['chart-institutions'] = new Chart(document.getElementById('chart-institutions'), {
@@ -142,7 +141,7 @@ function initPageCharts(id) {
     }
 
     if (id === 'pipeline') {
-        // Logjika e Pipeline dhe Outlier Detection
+        // Pipeline and Outlier Detection page initialized
         console.log("Pipeline page initialized");
     }
 
@@ -211,7 +210,7 @@ function handleUpload(event) {
             };
             img.src = e.target.result;
 
-            // Fsheh overlay-n dhe shfaq butonin Run
+            // Hide overlay and show Run button
             document.getElementById('scan-overlay').style.background = 'transparent';
             document.getElementById('scan-overlay').style.backdropFilter = 'none';
             document.getElementById('start-btn').style.display = 'flex';
@@ -234,7 +233,7 @@ function localInference(filename) {
         'Circle of Willis / Vessel Branch'
     ];
     
-    // Vendos nëse është pozitiv apo negativ bazuar në emrin e skedarit
+    // Determine positive/negative based on filename hint, otherwise 60% chance positive
     let isPositive;
     const lowerName = filename.toLowerCase();
     if (lowerName.includes('pos') || lowerName.includes('positive')) {
@@ -242,7 +241,7 @@ function localInference(filename) {
     } else if (lowerName.includes('neg') || lowerName.includes('negative')) {
         isPositive = false;
     } else {
-        // Për imazhe të panjohura, 60% shans pozitiv
+        // Unknown image: 60% chance positive
         isPositive = Math.random() > 0.4;
     }
 
@@ -289,7 +288,7 @@ function displayResults(data, ctx, canvas) {
         
         if (data.detections && data.detections.length > 0) {
             const det = data.detections[0];
-            // Vizato bounding box mbi imazhin
+            // Draw bounding box over the image
             const scaleX = canvas.width / 224;
             const scaleY = canvas.height / 224;
             const bx = det.box[0] * scaleX;
@@ -297,7 +296,7 @@ function displayResults(data, ctx, canvas) {
             const bw = det.box[2] * scaleX;
             const bh = det.box[3] * scaleY;
             
-            // Box e kuqe
+            // Red detection box
             ctx.strokeStyle = '#ef4444'; 
             ctx.lineWidth = Math.max(3, canvas.width * 0.012);
             ctx.setLineDash([]);
@@ -305,13 +304,14 @@ function displayResults(data, ctx, canvas) {
             
             // Label background
             const labelH = Math.max(24, canvas.height * 0.06);
+            const labelY = Math.max(labelH, by); // Guard: prevent label going above canvas
             ctx.fillStyle = 'rgba(239, 68, 68, 0.9)'; 
-            ctx.fillRect(bx, by - labelH, bw + 60, labelH);
+            ctx.fillRect(bx, labelY - labelH, bw + 60, labelH);
             
             // Label text
             ctx.fillStyle = '#ffffff'; 
             ctx.font = `bold ${Math.max(12, canvas.width * 0.035)}px Outfit`;
-            ctx.fillText('Aneurysm: ' + det.confidence + '%', bx + 5, by - labelH * 0.25);
+            ctx.fillText('Aneurysm: ' + det.confidence + '%', bx + 5, labelY - labelH * 0.25);
             
             // Corner markers
             const cornerLen = Math.max(8, canvas.width * 0.03);
@@ -355,7 +355,7 @@ async function runSimulation() {
     const results = document.getElementById('result-metrics');
     const overlay = document.getElementById('scan-overlay');
     
-    // Fsheh overlay-n plotësisht gjatë skanimit
+    // Hide overlay completely during scanning
     overlay.style.display = 'none';
 
     results.style.display = 'none';
@@ -371,7 +371,7 @@ async function runSimulation() {
         if (pos >= 100) pos = 0; 
     }, 25);
 
-    // Provo backend-in fillimisht
+    // Try backend first
     const formData = new FormData();
     formData.append('file', currentFile);
 
@@ -387,9 +387,9 @@ async function runSimulation() {
         clearTimeout(timeoutId);
         data = await response.json();
     } catch (e) {
-        // API nuk është e disponueshme — përdor simulimin lokal
+        // API not available — fall back to local simulation
         console.log('Backend not available, using local simulation mode.');
-        // Prit 2.5 sekonda për efekt realist
+        // Wait 2.5 seconds for a realistic effect
         await new Promise(resolve => setTimeout(resolve, 2500));
         data = localInference(currentFile.name);
     }

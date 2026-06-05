@@ -52,14 +52,14 @@
                 </div>
             </div>
             <div class="nav-menu">
-                <button class="nav-item active" onclick="showPage('overview')"><i class="ti ti-dashboard"></i> Overview</button>
-                <button class="nav-item" onclick="showPage('eda')"><i class="ti ti-chart-pie"></i> Data Analysis</button>
-                <button class="nav-item" onclick="showPage('cleaning')"><i class="ti ti-tool"></i> Data Cleaning</button>
-                <button class="nav-item" onclick="showPage('models')"><i class="ti ti-cpu"></i> AI Models</button>
-                <button class="nav-item" onclick="showPage('training')"><i class="ti ti-trending-up"></i> Training History</button>
-                <button class="nav-item" onclick="showPage('inference')"><i class="ti ti-scan"></i> Inference Sim</button>
-                <button class="nav-item" onclick="showPage('institutions')"><i class="ti ti-building-hospital"></i> Institutions</button>
-                <button class="nav-item" onclick="showPage('pipeline')"><i class="ti ti-layers-linked"></i> Pipeline</button>
+                <button class="nav-item active" onclick="showPage('overview', event)"><i class="ti ti-dashboard"></i> Overview</button>
+                <button class="nav-item" onclick="showPage('eda', event)"><i class="ti ti-chart-pie"></i> Data Analysis</button>
+                <button class="nav-item" onclick="showPage('cleaning', event)"><i class="ti ti-tool"></i> Data Cleaning</button>
+                <button class="nav-item" onclick="showPage('models', event)"><i class="ti ti-cpu"></i> AI Models</button>
+                <button class="nav-item" onclick="showPage('training', event)"><i class="ti ti-trending-up"></i> Training History</button>
+                <button class="nav-item" onclick="showPage('inference', event)"><i class="ti ti-scan"></i> Inference Sim</button>
+                <button class="nav-item" onclick="showPage('institutions', event)"><i class="ti ti-building-hospital"></i> Institutions</button>
+                <button class="nav-item" onclick="showPage('pipeline', event)"><i class="ti ti-layers-linked"></i> Pipeline</button>
             </div>
             <div class="nav-footer">
                 <div class="user-profile">
@@ -297,7 +297,7 @@
                                     <h3 style="font-size: 1.6rem; color: var(--text-main); margin-bottom: 5px; font-weight: 700;">40 Cases</h3>
                                     <p style="font-size: 1.1rem; color: var(--text-sub); margin: 0;">PixelSpacing outliers detected</p>
                                 </div>
-                                
+
                                 <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border-left: 5px solid var(--c1);">
                                     <h3 style="font-size: 1.2rem; color: var(--text-main); margin-bottom: 5px; font-weight: 700;">Methodology</h3>
                                     <p style="font-size: 1.1rem; color: var(--text-sub); margin: 0;">Interquartile Range (IQR) Clipping</p>
@@ -336,21 +336,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- INSTITUTIONS PAGE -->
-                <div id="page-institutions" class="page">
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-title"><i class="ti ti-world"></i> Global Data Contribution (Medical Dataset)</span>
-                            <div class="user-pill">17 Medical Centers</div>
-                        </div>
-                        <div style="height: 500px;"><canvas id="chart-institutions"></canvas></div>
-                    </div>
-                </div>
-
-                <!-- PIPELINE PAGE -->
-                <div id="page-pipeline" class="page">
                     <div class="card" style="margin-bottom: 24px;">
                         <div class="card-header"><span class="card-title"><i class="ti ti-settings"></i> Technology Stack</span></div>
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
@@ -361,6 +346,17 @@
                             <div class="cm-cell" style="background: #f1f5f9;"><h4>Charts</h4><p>Chart.js, Seaborn</p></div>
                             <div class="cm-cell" style="background: #f1f5f9;"><h4>Style</h4><p>Tabler, CSS3</p></div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- INSTITUTIONS PAGE -->
+                <div id="page-institutions" class="page">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title"><i class="ti ti-world"></i> Global Data Contribution (Medical Dataset)</span>
+                            <div class="user-pill">10 Medical Centers</div>
+                        </div>
+                        <div style="height: 500px;"><canvas id="chart-institutions"></canvas></div>
                     </div>
                 </div>
 

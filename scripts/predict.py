@@ -561,4 +561,4 @@ if __name__ == "__main__":
         if hasattr(result, "shape"):
             print(f"  Output shape : {result.shape}")
         print(f"  Kolonat      : {list(result.columns)}")
-        print(f"  Vlerat sample: {result.values[0][:5].tolist()} ...")
+        print(f"  Vlerat sample: {result.to_numpy()[0][:5].tolist()} ...")

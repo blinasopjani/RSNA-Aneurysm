@@ -935,6 +935,88 @@ def print_training_summary():
     print(f"             + 0.5 × mean(AUC(13 locations))")
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# DATASET SPLIT UTILITY — 60/20/20 stratified
+# ─────────────────────────────────────────────────────────────────────────────
+
+def create_train_val_test_split(
+    csv_path:    str   = "./data/train.csv",
+    train_frac:  float = 0.60,
+    val_frac:    float = 0.20,
+    test_frac:   float = 0.20,
+    random_seed: int   = 42,
+):
+    """
+    Ndan dataset-in RSNA në tre split të pavarur me stratifikim.
+
+    Raporti: 60% train / 20% validation / 20% test
+    Stratifikim mbi 'Aneurysm Present' — ruan proporcionin e klasave.
+    Seed i fiksuar (42) — garanton reprodukueshmëri për tezën.
+
+    Split-et ruhen gjithashtu si CSV për dokumentim dhe transparencë.
+
+    Args:
+        csv_path    : shtegu i train.csv
+        train_frac  : fraksioni i train set-it (default 0.60)
+        val_frac    : fraksioni i validation set-it (default 0.20)
+        test_frac   : fraksioni i test set-it (default 0.20)
+        random_seed : seed për reprodukueshmëri (default 42)
+
+    Returns:
+        dict me çelësa "train", "val", "test" — secilit DataFrame
+    """
+    from sklearn.model_selection import train_test_split as sk_split
+
+    df = pd.read_csv(csv_path)
+
+    print(f"\n  ── DATASET SPLIT ────────────────────────────────────────")
+    print(f"  Dataset total   : {len(df)} raste")
+    print(f"  Pozitivë        : {df['Aneurysm Present'].sum()} "
+          f"({df['Aneurysm Present'].mean()*100:.1f}%)")
+    print(f"  Negativë        : {(df['Aneurysm Present']==0).sum()} "
+          f"({(df['Aneurysm Present']==0).mean()*100:.1f}%)")
+    print(f"  Split ratio     : {train_frac:.0%} / {val_frac:.0%} / {test_frac:.0%}")
+    print(f"  Random seed     : {random_seed}")
+
+    assert abs(train_frac + val_frac + test_frac - 1.0) < 1e-9, \
+        "Shumat e fraksioneve duhet të jenë = 1.0"
+
+    # Hapi 1: ndaj train (60%) nga temp (40%)
+    df_train, df_temp = sk_split(
+        df,
+        test_size    = val_frac + test_frac,
+        stratify     = df["Aneurysm Present"],
+        random_state = random_seed,
+    )
+
+    # Hapi 2: ndaj temp në val (20%) dhe test (20%)
+    val_ratio = val_frac / (val_frac + test_frac)
+    df_val, df_test = sk_split(
+        df_temp,
+        test_size    = 1 - val_ratio,
+        stratify     = df_temp["Aneurysm Present"],
+        random_state = random_seed,
+    )
+
+    splits = {"train": df_train, "val": df_val, "test": df_test}
+
+    print(f"\n  {'Split':<12} {'N':>6} {'%Total':>8} {'Pos%':>8}")
+    print(f"  {'-'*36}")
+    for name, subset in splits.items():
+        pos_pct = subset["Aneurysm Present"].mean() * 100
+        print(f"  {name:<12} {len(subset):>6} {len(subset)/len(df)*100:>7.1f}% "
+              f"{pos_pct:>7.1f}%")
+
+    # Ruaj split IDs për reprodukueshmëri
+    os.makedirs(CONFIG["output_dir"], exist_ok=True)
+    for name, subset in splits.items():
+        out_path = os.path.join(CONFIG["output_dir"], f"split_{name}_ids.csv")
+        subset[["SeriesInstanceUID", "Aneurysm Present"]].to_csv(out_path, index=False)
+    print(f"\n  Split IDs ruajtur në: {CONFIG['output_dir']}")
+
+    return splits
+
+
 if __name__ == "__main__":
     print("\n" + "█" * 65)
     print("  MODEL TRAINING MODULE — NEUROVISION AI DETECTION")

@@ -438,7 +438,8 @@ class DatabaseManager:
 
         # Trajtimi i NaN
         df_db["patient_age"]       = pd.to_numeric(df_db.get("patient_age", 0), errors="coerce")
-        df_db["aneurysm_count"]    = df_db.get("aneurysm_count", 0).fillna(0).astype(int)
+        _ac = df_db.get("aneurysm_count")
+        df_db["aneurysm_count"] = _ac.fillna(0).astype(int) if _ac is not None else 0
 
         try:
             # Ngarko me batch-e për performance
