@@ -634,7 +634,7 @@ def generate_plots(df, model_results, eda_results):
     ax8.set_title("8. Training History (50 Epochs)", fontweight="bold")
     ax8.legend()
 
-    out = os.path.join(CONFIG["output_dir"], "full_analysis.png")
+    out = os.path.join(CONFIG["output_dir"], "figures", "full_analysis.png")
     plt.savefig(out, dpi=150, bbox_inches="tight")
     print(f"  OK Plots saved: {out}")
     plt.close()
@@ -655,7 +655,7 @@ def export_results(df, eda_results, model_results, corr):
     pos = int(df["Aneurysm Present"].sum())
 
     # 1. Cleaned dataset
-    df.to_csv(f"{out}cleaned_dataset.csv", index=False)
+    df.to_csv(f"{out}csv/cleaned_dataset.csv", index=False)
     print(f"  OK cleaned_dataset.csv       ({len(df)} rows, {df.shape[1]} cols)")
 
     # 2. Model metrics
@@ -666,20 +666,20 @@ def export_results(df, eda_results, model_results, corr):
         for mn, r in model_results.items()
         if isinstance(r, dict) and "auc" in r
     ]
-    pd.DataFrame(rows).to_csv(f"{out}model_metrics.csv", index=False)
+    pd.DataFrame(rows).to_csv(f"{out}csv/model_metrics.csv", index=False)
     print(f"  OK model_metrics.csv         ({len(rows)} models)")
 
     # 3. Location frequency
     lf = df[LABEL_COLS[:-1]].sum().sort_values(ascending=False).reset_index()
     lf.columns = ["Location", "Count"]
     lf["Pct_of_Positives"] = (lf["Count"] / pos * 100).round(1)
-    lf.to_csv(f"{out}location_frequency.csv", index=False)
+    lf.to_csv(f"{out}csv/location_frequency.csv", index=False)
     print(f"  OK location_frequency.csv    ({len(lf)} locations)")
 
     # 4. Feature correlations
     corr_df = corr.reset_index()
     corr_df.columns = ["Feature", "Pearson_r"]
-    corr_df.to_csv(f"{out}feature_correlations.csv", index=False)
+    corr_df.to_csv(f"{out}csv/feature_correlations.csv", index=False)
     print(f"  OK feature_correlations.csv  ({len(corr_df)} features)")
 
     # 5. JSON for BI tools
