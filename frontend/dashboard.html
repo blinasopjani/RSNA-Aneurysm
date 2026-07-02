@@ -103,8 +103,8 @@
                         </div>
                         <div class="kpi">
                             <span class="kpi-label"><i class="ti ti-target"></i> Best Model AUC</span>
-                            <span class="kpi-value" id="kpi-auc" style="color: var(--success)">0.924</span>
-                            <span class="kpi-sub">ResNet-101 Accuracy</span>
+                            <span class="kpi-value" id="kpi-auc" style="color: var(--success)">0.984</span>
+                            <span class="kpi-sub" id="kpi-auc-label">CNN Baseline</span>
                         </div>
                         <div class="kpi">
                             <span class="kpi-label"><i class="ti ti-layers-subtract"></i> Modalities</span>
@@ -223,7 +223,7 @@
                     </div>
                     <div class="grid-2">
                         <div class="card">
-                            <div class="card-header"><span class="card-title"><i class="ti ti-chart-line"></i> ResNet-101 ROC Curve</span></div>
+                            <div class="card-header"><span class="card-title"><i class="ti ti-chart-line"></i> ROC Curves — Both Models</span></div>
                             <div style="height: 300px;"><canvas id="chart-roc"></canvas></div>
                         </div>
                         <div class="card">
@@ -231,13 +231,34 @@
                             <div style="height: 300px;"><canvas id="chart-hpo"></canvas></div>
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-header"><span class="card-title"><i class="ti ti-grid-dots"></i> Confusion Matrices — Test Set (n=102)</span></div>
+                        <div id="confusion-matrix-section" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 20px;"></div>
+                    </div>
                 </div>
 
                 <!-- TRAINING PAGE -->
                 <div id="page-training" class="page">
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-header"><span class="card-title"><i class="ti ti-chart-line"></i> Val AUC per Epoch (real, 8 epochs)</span></div>
+                            <div style="height: 320px;"><canvas id="chart-training-auc"></canvas></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header"><span class="card-title"><i class="ti ti-trending-down"></i> Train Loss per Epoch (real)</span></div>
+                            <div style="height: 320px;"><canvas id="chart-training-loss"></canvas></div>
+                        </div>
+                    </div>
                     <div class="card">
-                        <div class="card-header"><span class="card-title"><i class="ti ti-history"></i> Training Convergence (50 Epochs)</span></div>
-                        <div style="height: 450px;"><canvas id="chart-training-history"></canvas></div>
+                        <div class="card-header"><span class="card-title"><i class="ti ti-settings-2"></i> Training Configuration</span></div>
+                        <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:16px; padding:20px;">
+                            <div class="cm-cell" style="background:#f1f5f9;"><h4>Epochs</h4><p>8 real epochs</p></div>
+                            <div class="cm-cell" style="background:#f1f5f9;"><h4>Train Set</h4><p>576 aug images</p></div>
+                            <div class="cm-cell" style="background:#f1f5f9;"><h4>Val / Test</h4><p>101 / 102 images</p></div>
+                            <div class="cm-cell" style="background:#f1f5f9;"><h4>Optimizer</h4><p>AdamW (lr=1e-3)</p></div>
+                            <div class="cm-cell" style="background:#f1f5f9;"><h4>Scheduler</h4><p>CosineAnnealingLR</p></div>
+                            <div class="cm-cell" style="background:#f1f5f9;"><h4>Loss Fn</h4><p>BCEWithLogitsLoss</p></div>
+                        </div>
                     </div>
                 </div>
 

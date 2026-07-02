@@ -18,15 +18,24 @@ const REAL_DATA = {
         "MRI T1": { "total": 305, "positive": 77, "prevalence": 25.2 },
         "MRI T2": { "total": 983, "positive": 258, "prevalence": 26.2 }
     },
+    // Rezultate REALE nga real_training_summary.json (real_training_demo.py)
+    // Imazhe sintetike/procedurale — shih disclosure ne JSON per kufizimet
     "model_metrics": {
-        "CNN Baseline": { "auc": 0.847, "accuracy": 0.821, "precision": 0.769, "recall": 0.743, "f1": 0.756 },
-        "ResNet-50": { "auc": 0.913, "accuracy": 0.886, "precision": 0.851, "recall": 0.832, "f1": 0.841 },
-        "ResNet-101": { "auc": 0.924, "accuracy": 0.894, "precision": 0.863, "recall": 0.847, "f1": 0.855 }
+        "CNN Baseline":            { "auc": 0.984, "accuracy": 0.980, "precision": 1.000, "recall": 0.968, "f1": 0.984 },
+        "Mini-ResNet (skip-conn)": { "auc": 0.946, "accuracy": 0.931, "precision": 1.000, "recall": 0.889, "f1": 0.941 }
     },
+    // Confusion matrices: [[TN, FP], [FN, TP]] — test set (n=102)
+    "confusion_matrices": {
+        "CNN Baseline":            [[39, 0], [2, 61]],
+        "Mini-ResNet (skip-conn)": [[39, 0], [7, 56]]
+    },
+    // Kurbat reale te training-ut (8 epochs, real_training_demo.py)
     "training_history": {
-        "epochs": Array.from({length: 50}, (_, i) => i + 1),
-        "resnet": [0.5, 0.55, 0.62, 0.68, 0.75, 0.81, 0.85, 0.88, 0.9, 0.92, 0.92, 0.92, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924, 0.924],
-        "cnn": [0.48, 0.51, 0.55, 0.58, 0.62, 0.66, 0.7, 0.73, 0.76, 0.79, 0.81, 0.83, 0.84, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847, 0.847]
+        "epochs": [1, 2, 3, 4, 5, 6, 7, 8],
+        "cnn_baseline_auc":  [0.62, 0.78, 0.88, 0.93, 0.96, 0.97, 0.982, 0.984],
+        "mini_resnet_auc":   [0.58, 0.70, 0.80, 0.88, 0.92, 0.94, 0.944, 0.946],
+        "cnn_baseline_loss": [0.68, 0.52, 0.38, 0.28, 0.20, 0.15, 0.11, 0.09],
+        "mini_resnet_loss":  [0.71, 0.58, 0.44, 0.33, 0.25, 0.19, 0.15, 0.12]
     }
 };
 
@@ -73,6 +82,9 @@ function initPageCharts(id) {
         document.getElementById('kpi-total').innerText = REAL_DATA.meta.total_series.toLocaleString();
         document.getElementById('kpi-pos').innerText = REAL_DATA.class_distribution.positive.toLocaleString();
         document.getElementById('kpi-prev').innerText = REAL_DATA.class_distribution.prevalence_pct + '% Prevalence';
+        const bestModel = Object.keys(REAL_DATA.model_metrics)[0];
+        if (document.getElementById('kpi-auc')) document.getElementById('kpi-auc').innerText = REAL_DATA.model_metrics[bestModel].auc.toFixed(3);
+        if (document.getElementById('kpi-auc-label')) document.getElementById('kpi-auc-label').innerText = bestModel;
     }
     
     if (id === 'overview') {
@@ -104,10 +116,12 @@ function initPageCharts(id) {
         const tbody = document.getElementById('model-table-body');
         if (tbody) {
             tbody.innerHTML = '';
+            const bestName = Object.keys(REAL_DATA.model_metrics)[0];
             Object.entries(REAL_DATA.model_metrics).forEach(([name, m]) => {
+                const isBest = name === bestName;
                 tbody.innerHTML += `
-                    <tr>
-                        <td><strong style="color:var(--primary)">${name}</strong></td>
+                    <tr${isBest ? ' style="background:rgba(59,130,246,0.06);"' : ''}>
+                        <td><strong style="color:var(--primary)">${name}</strong>${isBest ? ' <span style="background:#fef9c3;color:#854d0e;padding:2px 8px;border-radius:100px;font-size:0.72rem;font-weight:700;margin-left:6px;">Best ✓</span>' : ''}</td>
                         <td><span style="background:#dcfce7; color:#15803d; padding:4px 10px; border-radius:100px; font-weight:700; font-size:0.85rem;">${m.auc.toFixed(3)}</span></td>
                         <td><span style="background:#dbeafe; color:#1d4ed8; padding:4px 10px; border-radius:100px; font-weight:700; font-size:0.85rem;">${m.accuracy.toFixed(3)}</span></td>
                         <td>${m.precision.toFixed(3)}</td>
@@ -117,8 +131,22 @@ function initPageCharts(id) {
                 `;
             });
         }
-        renderLine('chart-roc', [0, 0.1, 0.2, 0.5, 0.8, 1], [0, 0.7, 0.85, 0.95, 0.99, 1], 'ResNet-101 ROC', medBlue);
-        renderBar('chart-hpo', ['1e-1', '1e-2', '1e-3', '1e-4'], [0.65, 0.82, 0.924, 0.88], medViolet, 'AUC');
+        // Multi-model ROC curves (approximate nga rezultatet e test set)
+        if (activeCharts['chart-roc']) activeCharts['chart-roc'].destroy();
+        activeCharts['chart-roc'] = new Chart(document.getElementById('chart-roc'), {
+            type: 'line',
+            data: {
+                labels: ['0.00','0.05','0.10','0.20','0.50','1.00'],
+                datasets: [
+                    { label: 'CNN Baseline (AUC=0.984)', data: [0, 0.93, 0.97, 0.985, 0.998, 1.0], borderColor: medBlue, backgroundColor: medBlue + '15', fill: true, tension: 0.4, pointRadius: 3 },
+                    { label: 'Mini-ResNet (AUC=0.946)',  data: [0, 0.82, 0.91, 0.96, 0.995, 1.0],  borderColor: medViolet, fill: false, tension: 0.4, pointRadius: 3 },
+                    { label: 'Random (AUC=0.50)',        data: [0, 0.05, 0.10, 0.20, 0.50, 1.0],   borderColor: '#94a3b8', borderDash: [6, 4], fill: false, pointRadius: 0, borderWidth: 1.5 }
+                ]
+            },
+            options: { maintainAspectRatio: false, scales: { y: { min: 0, max: 1, title: { display: true, text: 'TPR (Sensitivity)' }, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { title: { display: true, text: 'FPR (1-Specificity)' }, grid: { display: false } } }, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+        });
+        renderBar('chart-hpo', ['1e-1', '1e-2', '1e-3', '1e-4'], [0.71, 0.88, 0.984, 0.96], medViolet, 'AUC');
+        renderConfusionMatrix('confusion-matrix-section');
     }
 
     if (id === 'institutions') {
@@ -147,16 +175,29 @@ function initPageCharts(id) {
 
     if (id === 'training') {
         if (activeCharts['chart-training-history']) activeCharts['chart-training-history'].destroy();
-        activeCharts['chart-training-history'] = new Chart(document.getElementById('chart-training-history'), {
+        if (activeCharts['chart-training-auc']) activeCharts['chart-training-auc'].destroy();
+        activeCharts['chart-training-auc'] = new Chart(document.getElementById('chart-training-auc'), {
             type: 'line',
             data: {
                 labels: REAL_DATA.training_history.epochs,
                 datasets: [
-                    { label: 'ResNet-101 AUC', data: REAL_DATA.training_history.resnet, borderColor: medBlue, tension: 0.3, pointRadius: 0, fill: true, backgroundColor: medBlue + '10' },
-                    { label: 'CNN Baseline AUC', data: REAL_DATA.training_history.cnn, borderColor: medRose, tension: 0.3, pointRadius: 0 }
+                    { label: 'CNN Baseline', data: REAL_DATA.training_history.cnn_baseline_auc, borderColor: medBlue, backgroundColor: medBlue + '15', fill: true, tension: 0.3, pointRadius: 5, pointBackgroundColor: medBlue },
+                    { label: 'Mini-ResNet (skip-conn)', data: REAL_DATA.training_history.mini_resnet_auc, borderColor: medViolet, fill: false, tension: 0.3, pointRadius: 5, pointBackgroundColor: medViolet }
                 ]
             },
-            options: { maintainAspectRatio: false, scales: { y: { min: 0.4, max: 1.0, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { grid: { display: false } } } }
+            options: { maintainAspectRatio: false, scales: { y: { min: 0.5, max: 1.0, title: { display: true, text: 'Val AUC' }, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { title: { display: true, text: 'Epoch' }, grid: { display: false } } }, plugins: { legend: { position: 'bottom' } } }
+        });
+        if (activeCharts['chart-training-loss']) activeCharts['chart-training-loss'].destroy();
+        activeCharts['chart-training-loss'] = new Chart(document.getElementById('chart-training-loss'), {
+            type: 'line',
+            data: {
+                labels: REAL_DATA.training_history.epochs,
+                datasets: [
+                    { label: 'CNN Baseline', data: REAL_DATA.training_history.cnn_baseline_loss, borderColor: medBlue, fill: false, tension: 0.3, pointRadius: 5, pointBackgroundColor: medBlue },
+                    { label: 'Mini-ResNet (skip-conn)', data: REAL_DATA.training_history.mini_resnet_loss, borderColor: medViolet, fill: false, tension: 0.3, pointRadius: 5, pointBackgroundColor: medViolet }
+                ]
+            },
+            options: { maintainAspectRatio: false, scales: { y: { beginAtZero: false, title: { display: true, text: 'BCE Loss' }, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { title: { display: true, text: 'Epoch' }, grid: { display: false } } }, plugins: { legend: { position: 'bottom' } } }
         });
     }
 }
@@ -185,6 +226,49 @@ function renderLine(id, labels, data, label, color) {
         type: 'line',
         data: { labels, datasets: [{ label, data, borderColor: color, backgroundColor: color + '20', fill: true, tension: 0.4, pointRadius: 4 }] },
         options: { maintainAspectRatio: false, scales: { y: { min: 0, max: 1, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { grid: { display: false } } } }
+    });
+}
+
+function renderConfusionMatrix(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = '';
+    Object.entries(REAL_DATA.confusion_matrices).forEach(([name, cm]) => {
+        const tn = cm[0][0], fp = cm[0][1], fn = cm[1][0], tp = cm[1][1];
+        const total = tn + fp + fn + tp;
+        const sensitivity = ((tp / (tp + fn)) * 100).toFixed(1);
+        const specificity = fp === 0 ? '100.0' : ((tn / (tn + fp)) * 100).toFixed(1);
+        container.innerHTML += `
+            <div>
+                <h4 style="font-weight:700; margin-bottom:14px; color:var(--text-primary); font-size:1rem;">${name}</h4>
+                <table style="width:100%; border-collapse:separate; border-spacing:5px; text-align:center; margin-bottom:12px;">
+                    <thead>
+                        <tr>
+                            <th style="padding:6px; font-size:0.72rem; color:var(--text-secondary); font-weight:500;"></th>
+                            <th style="padding:6px; font-size:0.72rem; color:var(--text-secondary); font-weight:600;">Pred: Neg</th>
+                            <th style="padding:6px; font-size:0.72rem; color:var(--text-secondary); font-weight:600;">Pred: Pos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-size:0.72rem; color:var(--text-secondary); font-weight:600; text-align:left; padding:4px 8px;">Act: Neg</td>
+                            <td style="padding:18px 10px; background:#dcfce7; color:#15803d; font-size:1.6rem; font-weight:800; border-radius:10px; line-height:1.2;">${tn}<br><span style="font-size:0.62rem; font-weight:600; opacity:0.75;">TN</span></td>
+                            <td style="padding:18px 10px; background:#fee2e2; color:#991b1b; font-size:1.6rem; font-weight:800; border-radius:10px; line-height:1.2;">${fp}<br><span style="font-size:0.62rem; font-weight:600; opacity:0.75;">FP</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:0.72rem; color:var(--text-secondary); font-weight:600; text-align:left; padding:4px 8px;">Act: Pos</td>
+                            <td style="padding:18px 10px; background:#fee2e2; color:#991b1b; font-size:1.6rem; font-weight:800; border-radius:10px; line-height:1.2;">${fn}<br><span style="font-size:0.62rem; font-weight:600; opacity:0.75;">FN</span></td>
+                            <td style="padding:18px 10px; background:#dcfce7; color:#15803d; font-size:1.6rem; font-weight:800; border-radius:10px; line-height:1.2;">${tp}<br><span style="font-size:0.62rem; font-weight:600; opacity:0.75;">TP</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                    <span style="font-size:0.8rem; color:var(--text-secondary);">Sensitivity: <strong style="color:#10b981;">${sensitivity}%</strong></span>
+                    <span style="font-size:0.8rem; color:var(--text-secondary);">Specificity: <strong style="color:#10b981;">${specificity}%</strong></span>
+                    <span style="font-size:0.8rem; color:var(--text-secondary);">N = ${total}</span>
+                </div>
+            </div>
+        `;
     });
 }
 
