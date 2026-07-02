@@ -760,8 +760,10 @@ def main():
 
     print("\n" + "=" * 70)
     print("  PIPELINE COMPLETE — ALL PHASES FINISHED SUCCESSFULLY")
-    print(f"  ResNet-101 AUC-ROC: 0.924  vs  CNN Baseline: 0.847  (+0.077)")
-    print("  H1 CONFIRMED: Transfer learning (ResNet) > CNN Baseline")
+    print("  Faza 1-5 (EDA): REALE, mbi train.csv aktual.")
+    print("  Faza 6 (Model Eval): SIMULUAR per demonstrim te pipeline-it,")
+    print("  JO rezultat i nje modeli te trajnuar. Per rezultate REALE te")
+    print("  trajnimit shih: scripts/real_training_demo.py")
     print("=" * 70 + "\n")
 
     return df_clean, models

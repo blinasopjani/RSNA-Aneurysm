@@ -194,7 +194,7 @@ VALUES
     ('ResNet-50',    'MRA',    'test', 192, 0.9180, 0.8930, 0.8590, 0.8420, 0.8500),
     ('ResNet-50',    'MRI_T1', 'test',  96, 0.8970, 0.8720, 0.8360, 0.8190, 0.8270),
     ('ResNet-50',    'MRI_T2', 'test',  64, 0.8830, 0.8570, 0.8220, 0.8060, 0.8130),
-    ('ResNet-101',   NULL,     'test', 640, 0.9240, 0.8940, 0.8630, 0.8470, 0.8550), /* (Vlere e simuluar e pilotit) */
+    ('ResNet-101',   NULL,     'test', 640, 0.9240, 0.8940, 0.8630, 0.8470, 0.8550), /* SIMULUAR - jo trajnim real, shih Kapitullin 6.6 te tezes */
     ('ResNet-101',   'CTA',    'test', 288, 0.9420, 0.9190, 0.8840, 0.8680, 0.8760),
     ('ResNet-101',   'MRA',    'test', 192, 0.9290, 0.9040, 0.8700, 0.8540, 0.8620),
     ('ResNet-101',   'MRI_T1', 'test',  96, 0.9080, 0.8830, 0.8480, 0.8320, 0.8400),
@@ -507,7 +507,7 @@ UNION ALL
 SELECT
     'Aneurysm Present'  AS label,
     13                  AS weight,
-    0.9240              AS auc_roc_resnet101, /* (Simulated) */
+    0.9240              AS auc_roc_resnet101, /* SIMULUAR - jo trajnim real, shih Kapitullin 6.6 te tezes */
     'Primary target'    AS label_type
 
 ORDER BY weight DESC, label;
