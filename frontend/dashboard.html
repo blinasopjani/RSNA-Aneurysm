@@ -58,7 +58,6 @@
                 <button class="nav-item" onclick="showPage('models', event)"><i class="ti ti-cpu"></i> AI Models</button>
                 <button class="nav-item" onclick="showPage('training', event)"><i class="ti ti-trending-up"></i> Training History</button>
                 <button class="nav-item" onclick="showPage('inference', event)"><i class="ti ti-scan"></i> Inference Sim</button>
-                <button class="nav-item" onclick="showPage('institutions', event)"><i class="ti ti-building-hospital"></i> Institutions</button>
                 <button class="nav-item" onclick="showPage('pipeline', event)"><i class="ti ti-layers-linked"></i> Pipeline</button>
             </div>
             <div class="nav-footer">
@@ -221,15 +220,9 @@
                             <tbody id="model-table-body"></tbody>
                         </table>
                     </div>
-                    <div class="grid-2">
-                        <div class="card">
-                            <div class="card-header"><span class="card-title"><i class="ti ti-chart-line"></i> ROC Curves — Both Models</span></div>
-                            <div style="height: 300px;"><canvas id="chart-roc"></canvas></div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header"><span class="card-title"><i class="ti ti-adjustments"></i> HPO (Learning Rate)</span></div>
-                            <div style="height: 300px;"><canvas id="chart-hpo"></canvas></div>
-                        </div>
+                    <div class="card">
+                        <div class="card-header"><span class="card-title"><i class="ti ti-chart-line"></i> ROC Curves — Both Models</span></div>
+                        <div style="height: 350px;"><canvas id="chart-roc"></canvas></div>
                     </div>
                     <div class="card">
                         <div class="card-header"><span class="card-title"><i class="ti ti-grid-dots"></i> Confusion Matrices — Test Set (n=102)</span></div>
@@ -266,7 +259,7 @@
                 <div id="page-inference" class="page">
                     <div class="card inference-card">
                         <div class="card-header">
-                            <span class="card-title"><i class="ti ti-microscope"></i> AI Inference Simulator (ResNet-101)</span>
+                            <span class="card-title"><i class="ti ti-microscope"></i> AI Inference Simulator (CNN Baseline)</span>
                             <div class="status-indicator" id="scan-status">Ready for analysis</div>
                         </div>
                         <div class="grid-2">
@@ -297,7 +290,7 @@
                                     <div style="font-size: 0.95rem; line-height: 1.8; color: var(--text-secondary); background: #f8fafc; padding: 20px; border-radius: var(--radius-md);">
                                         <p><strong style="color: var(--text-primary)">Anatomical Location:</strong> <span id="res-location">Internal Carotid Artery</span></p>
                                         <p><strong style="color: var(--text-primary)">Imaging Modality:</strong> <span id="res-modality">CTA</span></p>
-                                        <p style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px; font-style: italic;">Automated analysis complete via ResNet-101 architecture.</p>
+                                        <p style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px; font-style: italic;">Automated analysis complete via CNN Baseline architecture.</p>
                                     </div>
                                     <button class="nav-item" style="margin-top: 25px; border: 1px solid var(--border-color); justify-content: center; background: #fff;" onclick="resetInference()">
                                         <i class="ti ti-refresh"></i> New Patient Scan
@@ -370,16 +363,7 @@
                     </div>
                 </div>
 
-                <!-- INSTITUTIONS PAGE -->
-                <div id="page-institutions" class="page">
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-title"><i class="ti ti-world"></i> Global Data Contribution (Medical Dataset)</span>
-                            <div class="user-pill">10 Medical Centers</div>
-                        </div>
-                        <div style="height: 500px;"><canvas id="chart-institutions"></canvas></div>
-                    </div>
-                </div>
+                <!-- NO INSTITUTIONS PAGE ANYMORE -->
 
             </div>
         </main>

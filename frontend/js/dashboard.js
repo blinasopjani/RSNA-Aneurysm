@@ -144,29 +144,10 @@ function initPageCharts(id) {
                 ]
             },
             options: { maintainAspectRatio: false, scales: { y: { min: 0, max: 1, title: { display: true, text: 'TPR (Sensitivity)' }, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { title: { display: true, text: 'FPR (1-Specificity)' }, grid: { display: false } } }, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
-        });
-        renderBar('chart-hpo', ['1e-1', '1e-2', '1e-3', '1e-4'], [0.71, 0.88, 0.984, 0.96], medViolet, 'AUC');
         renderConfusionMatrix('confusion-matrix-section');
     }
 
-    if (id === 'institutions') {
-        const instLabels = ['Mayo Clinic', 'Stanford Med.', 'China Med. Univ.', 'Liverpool NHS', 'Duke Univ.', 'UCSF', 'Johns Hopkins', 'Tokyo Med.', 'Charité Berlin', 'Toronto Gen.'];
-        const posData = [142, 120, 98, 85, 77, 65, 54, 48, 41, 39];
-        const negData = [210, 180, 150, 140, 130, 110, 90, 80, 75, 70];
-        
-        if (activeCharts['chart-institutions']) activeCharts['chart-institutions'].destroy();
-        activeCharts['chart-institutions'] = new Chart(document.getElementById('chart-institutions'), {
-            type: 'bar',
-            data: {
-                labels: instLabels,
-                datasets: [
-                    { label: 'Positive', data: posData, backgroundColor: medRose, borderRadius: 5 },
-                    { label: 'Negative', data: negData, backgroundColor: medBlue, borderRadius: 5 }
-                ]
-            },
-            options: { maintainAspectRatio: false, indexAxis: 'y', scales: { x: { stacked: true }, y: { stacked: true } } }
-        });
-    }
+    // Institutions removed
 
     if (id === 'pipeline') {
         // Pipeline and Outlier Detection page initialized
@@ -298,7 +279,7 @@ function handleUpload(event) {
             document.getElementById('scan-overlay').style.background = 'transparent';
             document.getElementById('scan-overlay').style.backdropFilter = 'none';
             document.getElementById('start-btn').style.display = 'flex';
-            document.getElementById('scan-status').innerText = 'Patient scan loaded. Ready for ResNet-101 analysis.';
+            document.getElementById('scan-status').innerText = 'Patient scan loaded. Ready for CNN Baseline analysis.';
             document.getElementById('scan-status').style.background = '#ecfdf5';
             document.getElementById('scan-status').style.color = '#059669';
         };
@@ -344,16 +325,16 @@ function localInference(filename) {
                 ],
                 location: locations[Math.floor(Math.random() * locations.length)]
             }],
-            modality: 'CTA/MRA (ResNet-101)',
-            engine: 'ResNet-101 Engine',
+            modality: 'CTA/MRA (CNN Baseline)',
+            engine: 'CNN Baseline Engine',
             status: 'Success'
         };
     } else {
         return {
             prediction: 'Negative',
             detections: [],
-            modality: 'CTA/MRA (ResNet-101)',
-            engine: 'ResNet-101 Engine',
+            modality: 'CTA/MRA (CNN Baseline)',
+            engine: 'CNN Baseline Engine',
             status: 'Success'
         };
     }
@@ -443,7 +424,7 @@ async function runSimulation() {
     overlay.style.display = 'none';
 
     results.style.display = 'none';
-    status.innerHTML = '<i class="ti ti-loader rotate"></i> Running ResNet-101 Inference...';
+    status.innerHTML = '<i class="ti ti-loader rotate"></i> Running CNN Baseline Inference...';
     status.style.background = '#fef3c7';
     status.style.color = '#92400e';
     line.style.display = 'block';

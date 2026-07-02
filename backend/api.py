@@ -51,7 +51,7 @@ LABEL_COLS = [
 
 N_CLASSES       = len(LABEL_COLS)   # 14
 CHECKPOINT_PATH = os.path.join(
-    os.path.dirname(__file__), "..", "checkpoints", "ResNet101_best.pt"
+    os.path.dirname(__file__), "..", "checkpoints", "CNNBaseline_best.pt"
 )
 
 IMAGENET_MEAN = [0.485, 0.456, 0.406]
@@ -219,7 +219,7 @@ def health():
     """Kontrollo statusin e serverit dhe modelit."""
     return jsonify({
         "status":       "running",
-        "model":        "ResNet-101",
+        "model":        "CNN Baseline",
         "n_outputs":    N_CLASSES,
         "torch":        TORCH_AVAILABLE,
         "device":       str(DEVICE) if DEVICE else "N/A",
@@ -245,8 +245,8 @@ def model_info():
         })
 
     return jsonify({
-        "model_name":    "ResNet-101 (Transfer Learning — ImageNet)",
-        "architecture":  "ResNet-101 backbone + custom classification head",
+        "model_name":    "CNN Baseline",
+        "architecture":  "CNN Baseline architecture",
         "n_classes":     N_CLASSES,
         "input_size":    "224×224×3",
         "output":        "14 probabilitete sigmoid [0.0, 1.0]",
@@ -328,7 +328,7 @@ def predict_endpoint():
         "probabilities":       prob_dict,
         "detected_locations":  detected_locations,
         "n_locations_detected":len(detected_locations),
-        "model":               "ResNet-101",
+        "model":               "CNN Baseline",
         "n_outputs":           N_CLASSES,
         "checkpoint_used":     _model_loaded_from_checkpoint,
         "status":              "success",
