@@ -144,6 +144,7 @@ function initPageCharts(id) {
                 ]
             },
             options: { maintainAspectRatio: false, scales: { y: { min: 0, max: 1, title: { display: true, text: 'TPR (Sensitivity)' }, grid: { color: document.body.classList.contains('dark-mode') ? '#334155' : '#f1f5f9' } }, x: { title: { display: true, text: 'FPR (1-Specificity)' }, grid: { display: false } } }, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+        });
         renderConfusionMatrix('confusion-matrix-section');
     }
 

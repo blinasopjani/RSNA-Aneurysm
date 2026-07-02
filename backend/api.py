@@ -367,7 +367,7 @@ def predict_dicom_endpoint():
         return jsonify({"error": f"Shtegu nuk ekziston: {series_path}"}), 400
 
     try:
-        from predict import predict as rsna_predict
+        from predict import predict as rsna_predict  # type: ignore
         result_df   = rsna_predict(series_path)
         series_id   = os.path.basename(series_path.rstrip("/\\"))
 
