@@ -1,0 +1,44 @@
+{
+  "disclosure": "Rezultatet e meposhtme jane prodhuar nga trajnim REAL (jo simulim) mbi imazhe sintetike/procedurale (jo skanime DICOM reale te pacienteve). Train set = vetem imazhet e augmentuara; Val/Test = vetem imazhet baze, kurre te perdorura ne trajnim. Perdoren si prove-koncepti per pipeline-in e klasifikimit, JO si rezultat klinik mbi te dhena reale RSNA.",
+  "n_train": 576,
+  "n_val": 101,
+  "n_test": 102,
+  "results": {
+    "CNN Baseline": {
+      "threshold_used": 0.31784412264823914,
+      "auc": 0.9841269841269841,
+      "accuracy": 0.9803921568627451,
+      "precision": 1.0,
+      "recall": 0.9682539682539683,
+      "f1": 0.9838709677419355,
+      "confusion_matrix": [
+        [
+          39,
+          0
+        ],
+        [
+          2,
+          61
+        ]
+      ]
+    },
+    "Mini-ResNet (skip-connections)": {
+      "threshold_used": 0.8223572969436646,
+      "auc": 0.9458689458689458,
+      "accuracy": 0.9313725490196079,
+      "precision": 1.0,
+      "recall": 0.8888888888888888,
+      "f1": 0.9411764705882353,
+      "confusion_matrix": [
+        [
+          39,
+          0
+        ],
+        [
+          7,
+          56
+        ]
+      ]
+    }
+  }
+}
