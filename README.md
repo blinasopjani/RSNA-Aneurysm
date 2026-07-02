@@ -4,7 +4,7 @@
 
 **Studente:** Blina Sopjani · ID: 69401  
 **Universiteti:** Universum · Computer Science  
-**Modeli kryesor:** ResNet-101 (Transfer Learning) · AUC: 0.924  
+**Modeli kryesor (pilot i verifikuar):** CNN Baseline · AUC: 0.984 (mbi imazhe proxy sintetike, jo DICOM reale — shih Kapitullin 6.6 te tezes). ResNet-101 i plote eshte planifikuar, jo ende i trajnuar.  
 
 ---
 

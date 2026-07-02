@@ -103,7 +103,7 @@
                         <div class="kpi">
                             <span class="kpi-label"><i class="ti ti-target"></i> Best Model AUC</span>
                             <span class="kpi-value" id="kpi-auc" style="color: var(--success)">0.984</span>
-                            <span class="kpi-sub" id="kpi-auc-label">CNN Baseline</span>
+                            <span class="kpi-sub" id="kpi-auc-label">CNN Baseline (pilot, proxy data)</span>
                         </div>
                         <div class="kpi">
                             <span class="kpi-label"><i class="ti ti-layers-subtract"></i> Modalities</span>
@@ -261,6 +261,12 @@
                         <div class="card-header">
                             <span class="card-title"><i class="ti ti-microscope"></i> AI Inference Simulator (CNN Baseline)</span>
                             <div class="status-indicator" id="scan-status">Ready for analysis</div>
+                        </div>
+                        <div style="margin: 0 20px 20px 20px; padding: 14px 18px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; display: flex; align-items: flex-start; gap: 12px;">
+                            <i class="ti ti-alert-triangle" style="color: #b45309; font-size: 1.3rem; margin-top: 2px;"></i>
+                            <div style="font-size: 0.92rem; color: #78350f; line-height: 1.5;">
+                                <strong>Demo edukativ, jo mjet klinik.</strong> Modeli aktiv (CNN Baseline, AUC 0.984) është trajnuar mbi imazhe anatomike sintetike/procedurale, gjeneruar për të verifikuar pipeline-in e klasifikimit, jo mbi skanime DICOM reale të pacientëve. Rezultatet këtu nuk pasqyrojnë performancë klinike dhe nuk duhen përdorur për vendimmarrje mjekësore. Shih Kapitullin 6.6 (Kufizimet) të tezës për detaje.
+                            </div>
                         </div>
                         <div class="grid-2">
                             <div id="scan-container">
