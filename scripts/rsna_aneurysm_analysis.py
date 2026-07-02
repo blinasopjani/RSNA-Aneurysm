@@ -463,6 +463,9 @@ def evaluate_all_models():
     print("\n" + "=" * 70)
     print("PHASE 6: MODEL EVALUATION")
     print("=" * 70)
+    print("\n  KUJDES: Keto metrika jane TE SIMULUARA per qellime demonstrimi te pipeline-it")
+    print("  analitik (EDA), JO rezultat i nje modeli te trajnuar. Per rezultate reale te")
+    print("  trajnimit, shih scripts/real_training_demo.py dhe Kapitullin 6 te tezes.\n")
 
     n_test = int(CONFIG["n_samples"] * CONFIG["test_split"])
     prev   = 0.214

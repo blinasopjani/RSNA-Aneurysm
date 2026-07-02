@@ -90,8 +90,8 @@ BEST_CONFIG = {
     'scheduler'     : 'CosineAnnealingLR',
     'freeze_epochs' : 10,
     'pos_weight'    : 1.334,
-    'final_val_auc' : 0.924,
-    'note'          : 'Best configuration after full 50-epoch training with transfer learning'
+    'final_val_auc' : 0.924,  # Vlere e simuluar per demonstrim HPO, jo rezultat i pilotit real
+    'note'          : 'Best configuration after full 50-epoch training (simulated)'
 }
 
 

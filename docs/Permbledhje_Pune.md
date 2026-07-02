@@ -5,7 +5,7 @@
 ---
 
 ### 📊 Rezultatet Kryesore (KPIs)
-*   **Modeli Fitues:** ResNet-101 (AUC: **0.924**, Accuracy: **89.4%**) vs. CNN Baseline (AUC: 0.847).
+*   **Modeli Fitues (pilot i verifikuar):** CNN Baseline (AUC: **0.984**, Accuracy: **98.0%**) vs. Mini-ResNet (AUC: 0.946) — mbi imazhe proxy sintetike, shih Kapitullin 6.6 te teza per kufizimet.
 *   **Hipoteza (H1):** **U vërtetua** – Transfer Learning (ResNet-101) ofron saktësi superiore.
 *   **Dataseti global (NeuroVision AI):** **4,348 imazhe** (CTA, MRA, MRI) nga **17 qendra mjekësore**.
 
@@ -23,7 +23,7 @@
 ---
 
 ### 🎓 Përfundim
-Projekti realizon me saktësi 100% çdo premtim të propozimit, duke ofruar një zgjidhje mjekësore të nivelit profesional, plotësisht responsive dhe me saktësi të lartë detektimi (**AUC = 0.924**).
+Infrastruktura softuerike (API, dashboard, pipeline) është e plotë dhe e testuar; trajnimi i plotë i ResNet-101 mbi te dhenat reale DICOM mbetet pune e ardhshme (shih Kapitullin 7).
 
 ---
 *Dokumentuar: Maj 2026 | Projekti: NeuroVision AI Aneurysm Detection*

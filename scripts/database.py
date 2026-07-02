@@ -539,9 +539,9 @@ class DatabaseManager:
             n_samples  : Numri i serive të test set-it
 
         Shembull:
-            db.save_model_results("ResNet-101", {
-                "auc": 0.924, "accuracy": 0.894,
-                "precision": 0.863, "recall": 0.847, "f1": 0.855,
+            db.save_model_results("CNN Baseline", {
+                "auc": 0.984, "accuracy": 0.980,
+                "precision": 0.963, "recall": 0.947, "f1": 0.955,
                 "confusion_matrix": {"TP":133,"TN":506,"FP":1,"FN":0}
             })
         """

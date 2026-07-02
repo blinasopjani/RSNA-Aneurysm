@@ -71,13 +71,13 @@ dashboard.html     → Frontend (hap direkt në browser)
 
 | Faqja | Përshkrimi |
 |-------|------------|
-| **Overview** | KPI kryesore: 4,348 serie, 1,863 pozitive, AUC 0.924 |
+| **Overview** | KPI kryesore: 4,348 serie, 1,863 pozitive, AUC 0.984 (CNN Baseline, pilot) |
 | **Data Analysis** | Shpërndarja gjinore, moshe, prevalenca sipas modalitetit |
 | **Data Cleaning** | Missing values, pastrimi i të dhënave |
 | **AI Models** | Tabela krahasuese CNN vs ResNet, ROC Curve, HPO |
 | **Training** | Konvergjenca e trajnimit (50 epoka) |
 | **Inference Sim** | Upload imazhi → Detektim live me ResNet-101 |
-| **Institutions** | Kontributi i 17 qendrave mjekësore |
+| **Institutions** | Kontributi i 17 qendrave mjekësore (E Fshirë) |
 | **Pipeline** | Procesi i pastrimit: IQR Outlier Detection |
 
 ---
